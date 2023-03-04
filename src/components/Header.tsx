@@ -5,7 +5,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Avatar from '@mui/material/Avatar/Avatar';
+import Avatar from '@mui/material/Avatar';
 
 function Header() {
   return (

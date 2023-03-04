@@ -5,7 +5,6 @@ import 'react-pdf/dist/esm/Page/TextLayer.css';
 import ControlPanel from './ControlPanel';
 import Loader from './Loader';
 import PDFSideBar from './PDFSideBar';
-// import ModeIcon from '@mui/icons-material/Mode';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -27,8 +26,6 @@ const PDFReader = () => {
   }
 
   useEffect(() => {
-
-
       function getRangeObject(selectionObject){
           try{ 
               if(selectionObject.getRangeAt)
@@ -55,35 +52,22 @@ const PDFReader = () => {
     
   function handlerFunction(event) {
 
-    // If there is already a share dialog, remove it
     if (document.contains(document.getElementById("share-snippet"))) {
         document.getElementById("share-snippet").remove();
     }
     
-    // Check if any text was selected
     if(window.getSelection().toString().length > 0) {
 
-        // Get selected text and encode it
-        // const selection = encodeURIComponent(window.getSelection().toString()).replace(/[!'()*]/g, escape);
         const selection = window.getSelection();
         const range = getRangeObject(selection);
         const clientRect = range.getBoundingClientRect();
 
         iterateAndHighlight(selection);
         
-        // Find out how much (if any) user has scrolled
         var scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
         
-        // Get cursor position
         const posX = clientRect.x;
         const posY = clientRect.bottom + 20 + scrollTop;
-        // const posX = event.clientX - 110;
-        // const posY = event.clientY + 20 + scrollTop;
-      
-        // Create Twitter share URL
-        // const shareUrl = 'http://twitter.com/share?text='+selection+'&url=https://awik.io';
-        
-        // Append HTML to the body, create the "Tweet Selection" dialog
         document.body.insertAdjacentHTML('beforeend', '    <div id="share-snippet" style="position: absolute; top: '+posY+'px; left: '+posX+'px;"><div class="speech-bubble"><div class="share-inside" onClick={handleHighlightOnClick}> ToolBar </div></div></div>');
     }
 }
@@ -220,7 +204,7 @@ const PDFReader = () => {
   return (
     <div className='grow flex'>
    		<Loader isLoading={isLoading} />
-		<section id="pdf-section" className="basis-3/5" >
+		<section id="pdf-section" className="basis-3/5 h-full" >
 
 			<ControlPanel scale={scale} setScale={setScale} numPages={numPages} pageNumber={pageNumber} setPageNumber={setPageNumber} file={file}/>
 

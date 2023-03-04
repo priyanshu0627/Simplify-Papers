@@ -13,8 +13,7 @@ const PDFPrinter = ({ file } : any) => {
     pdfFrame.contentWindow.print();
   };
   return (
-    // <i className="fas fa-print clickable" onClick={print} title="download" />
-    <PrintIcon onClick={print}/>
+    <PrintIcon className='text-green-800' onClick={print}/>
   );
 };
 

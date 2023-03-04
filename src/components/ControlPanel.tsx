@@ -52,32 +52,28 @@ const ControlPanel = (props : any) => {
   return (
     <div className="flex text-[16px] text-black rounded p-4 my-4 bg-white justify-between items-center">
       <div className="flex justify-between items-center">
-        <FastRewindIcon className={`mx-4 ${firstPageClass}`} onClick={goToFirstPage}/>
-        <ArrowLeftIcon className={`mx-4 ${firstPageClass}`} onClick={goToPreviousPage}/>
+        <FastRewindIcon className={` ${firstPageClass}`} onClick={goToFirstPage}/>
+        <ArrowLeftIcon className={` ${firstPageClass}`} onClick={goToPreviousPage}/>
         <span className='flex items-center mx-1'>
           Page
           <input name="pageNumber" type="number" min={1} max={numPages || 1} className="mx-2 px-1 border-2 border-black rounded" value={pageNumber} onChange={onPageChange} />{' '}
            of
         </span>
         {numPages}
-        <ArrowRightIcon className={` mx-4 ${lastPageClass}`} onClick={goToNextPage}/>
-        <FastForwardIcon className={`mx-4  ${lastPageClass}`} onClick={goToLastPage}/>
+        <ArrowRightIcon className={`${lastPageClass}`} onClick={goToNextPage}/>
+        <FastForwardIcon className={`${lastPageClass}`} onClick={goToLastPage}/>
       </div>
       <div className="flex justify-between items-center">
-        <ZoomOutIcon className={`mx-4 ${zoomInClass}`} onClick={zoomOut}/>
+        <ZoomOutIcon className={`${zoomInClass}`} onClick={zoomOut}/>
         <span>
           {(scale * 100).toFixed()}%
         </span>
-        <ZoomInIcon className={`mx-4 ${zoomOutClass}`} onClick={zoomIn}/>
+        <ZoomInIcon className={`${zoomOutClass}`} onClick={zoomIn}/>
       </div>
-      <div className="mx-4">
-        <a href="/assets/docs/file-sample.pdf" download={true} title="download">
-          <DownloadIcon className='mx-4'/>
-        </a>
-      </div>
-      <div className="mx-4">
-        <PDFPrinter file={file} />
-      </div>
+      <a href="/assets/docs/file-sample.pdf" download={true} title="download">
+        <DownloadIcon className='text-green-800	'/>
+      </a>
+      <PDFPrinter file={file} />
     </div>
   );
 };
