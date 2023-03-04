@@ -1,0 +1,239 @@
+import React, { useEffect, useState } from 'react';
+import { Document, Page, pdfjs } from 'react-pdf';
+import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
+import 'react-pdf/dist/esm/Page/TextLayer.css';
+import ControlPanel from './ControlPanel';
+import Loader from './Loader';
+import PDFSideBar from './PDFSideBar';
+// import ModeIcon from '@mui/icons-material/Mode';
+
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+
+const PDFReader = () => {
+  const [file, setFile] = useState("./paper.pdf");
+  const [scale, setScale] = useState(1.1);
+  const [numPages, setNumPages] = useState(null);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
+
+  function onDocumentLoadSuccess({ numPages } : any) {
+    setNumPages(numPages);
+    setIsLoading(false);
+
+  }
+
+  function onFileChange(event : any) {
+    setFile(event.target.files[0]);
+  }
+
+  useEffect(() => {
+
+
+      function getRangeObject(selectionObject){
+          try{ 
+              if(selectionObject.getRangeAt)
+                  return selectionObject.getRangeAt(0);
+          }
+          catch(ex){
+              console.log(ex);
+          }
+      }
+
+    function handleHighlightOnClick() {
+      console.log('here');
+    }
+
+  function iterateAndHighlight(selection) {
+    let it = selection.anchorNode.parentNode;
+    while(it != selection.focusNode.parentElement) {
+        if(it.tagName === 'SPAN') {
+            it.innerHTML = '<mark>' + it.innerHTML + '</mark>'
+        }
+        it = it.nextElementSibling;
+    }
+  }  
+    
+  function handlerFunction(event) {
+
+    // If there is already a share dialog, remove it
+    if (document.contains(document.getElementById("share-snippet"))) {
+        document.getElementById("share-snippet").remove();
+    }
+    
+    // Check if any text was selected
+    if(window.getSelection().toString().length > 0) {
+
+        // Get selected text and encode it
+        // const selection = encodeURIComponent(window.getSelection().toString()).replace(/[!'()*]/g, escape);
+        const selection = window.getSelection();
+        const range = getRangeObject(selection);
+        const clientRect = range.getBoundingClientRect();
+
+        iterateAndHighlight(selection);
+        
+        // Find out how much (if any) user has scrolled
+        var scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+        
+        // Get cursor position
+        const posX = clientRect.x;
+        const posY = clientRect.bottom + 20 + scrollTop;
+        // const posX = event.clientX - 110;
+        // const posY = event.clientY + 20 + scrollTop;
+      
+        // Create Twitter share URL
+        // const shareUrl = 'http://twitter.com/share?text='+selection+'&url=https://awik.io';
+        
+        // Append HTML to the body, create the "Tweet Selection" dialog
+        document.body.insertAdjacentHTML('beforeend', '    <div id="share-snippet" style="position: absolute; top: '+posY+'px; left: '+posX+'px;"><div class="speech-bubble"><div class="share-inside" onClick={handleHighlightOnClick}> ToolBar </div></div></div>');
+    }
+}
+
+// document.addEventListener('mouseup', handlerFunction, false);
+    // document.addEventListener('pointerup', (e : any) => {
+    //   debugger;
+    //   const selection = window.getSelection();
+    //         /* get the Selection object */
+    //         const userSelection = window.getSelection();
+
+    //         /* get the innerText (without the tags) */ 
+    //         const text = userSelection.toString();
+    
+    //         /* Creating Range object based on the userSelection object */
+    //         var rangeObject = getRangeObject(userSelection);
+    
+    //         /* 
+    //            This extracts the contents from the DOM literally, inclusive of the tags. 
+    //            The content extracted also disappears from the DOM 
+    //         */
+    //         const contents = rangeObject.extractContents(); 
+    
+    //         var span = document.createElement("span");
+    //         span.className = "highlight";
+    //         span.appendChild(contents);
+    
+    //         /* Insert your new span element in the same position from where the selected text was extracted */
+    //         rangeObject.insertNode(span);
+    //   if (selection.type === 'Range') {
+        
+    //     for (let i = 0; i < selection.rangeCount; i++) {
+    //       const range = selection.getRangeAt(i);
+    //       debugger;
+    //       playAnimation(range.commonAncestorContainer);
+    //     }
+    //   }
+
+    //   // var selection = window.getSelection();
+    //   // if (!selection.isCollapsed) {
+    //   //     // we have a non-zero length selection
+    //   //     var startNode = selection.anchorNode;
+    //   //     var startOffset = selection.anchorOffset;
+    //   //     if (startNode instanceof Element) {
+    //   //         // if it is an element then the offset is the child node index
+    //   //         startNode = startNode.childNodes[startOffset];
+    //   //         startOffset = 0;
+    //   //     }
+    //   //     var endNode = selection.focusNode;
+    //   //     var endOffset = selection.focusOffset;
+    //   //     if (endNode instanceof Element) {
+    //   //         // if it is an element then the offset is the child node index
+    //   //         endNode = endNode.childNodes[endOffset];
+    //   //         endOffset = 0;
+    //   //     }
+
+    //   //     if (endNode instanceof Text) {
+    //   //       endNode.splitText(endOffset);
+    //   //   }
+    //   //   if (startNode instanceof Text) {
+    //   //       startNode.splitText(startOffset);
+    //   //       startNode = startNode.nextSibling;
+    //   //   }
+         
+    //   //   // filter out the element with id=ignore
+    //   //   function filterFunction(node) { 
+    //   //       if (node.id === 'ignore') {
+    //   //           return NodeFilter.FILTER_REJECT;
+    //   //       }
+    //   //       return NodeFilter.FILTER_ACCEPT;
+    //   //   }
+         
+    //   //   let nodeTypes = NodeFilter.SHOW_ELEMENT|NodeFilter.SHOW_TEXT;
+         
+    //   //   let walker = document.createTreeWalker(document.body, nodeTypes, { acceptNode: filterFunction}, false);
+    //   //   walker.currentNode = startNode;
+    //   //   let nextNode = walker.currentNode;
+    //   //   let html = [];
+    //   //   while (nextNode && nextNode !== endNode) {
+    //   //       if (nextNode.nodeType === Node.TEXT_NODE) {
+    //   //           html.push(nextNode.nodeValue);
+    //   //           // const span = document.createElement("span");
+    //   //           // span.innerHTML = `<mark>${nextNode.nodeValue}</mark>`;
+    //   //           // debugger;
+    //   //           // nextNode.parentElement?.innerHTML(`<mark>${nextNode.nodeValue}</mark>`);
+    //   //       }
+    //   //       debugger;
+    //   //       // nextNode.replace(/e/gi, '<span>e</span>');
+
+    //   //       nextNode = walker.nextNode();
+    //   //   }
+    //   //   // if (nextNode.nodeType === Node.TEXT_NODE) {
+    //   //   //     html.push(nextNode.nodeValue);
+    //   //   // }
+    //   //   let filteredOutput = document.createElement('li');
+    //   //   filteredOutput.innerHTML = html.join('');
+    //   //     console.log(startNode, startOffset, endNode, endOffset);
+    //   // }
+    // });
+    
+    function playAnimation(el) {
+      if (el.nodeType === Node.TEXT_NODE) {
+        el = el.parentNode;
+      }
+    
+      el.classList.remove('highlight');
+      setTimeout(() => {
+        el.classList.add('highlight');
+      }, 0);
+    }
+
+    function debounce(fn, delay) {
+      let timer = null;
+      return function () {
+        var context = this, args = arguments;
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+          fn.apply(context, args);
+        }, delay);
+      };
+    };
+    
+    // document.addEventListener("selectionchange", debounce(function (event) {
+    //     debugger;
+    //   let selection = document.getSelection ? document.getSelection().toString() :  document.selection.createRange().toString() ;
+    //   console.log(selection);
+    // }, 250));
+
+    document.addEventListener("selectionchange", debounce(handlerFunction, 250));
+  
+  }, [])
+  
+
+  return (
+    <div className='grow flex'>
+   		<Loader isLoading={isLoading} />
+		<section id="pdf-section" className="basis-3/5" >
+
+			<ControlPanel scale={scale} setScale={setScale} numPages={numPages} pageNumber={pageNumber} setPageNumber={setPageNumber} file={file}/>
+
+			<Document file={file} onLoadSuccess={onDocumentLoadSuccess} className="flex justify-center">
+				<Page pageNumber={pageNumber} scale={scale} />
+			</Document>
+
+		</section>
+		<section className='basis-2/5'>
+			<PDFSideBar onFileChange={onFileChange}/>
+		</section>
+    </div>
+  );
+};
+
+export default PDFReader;
