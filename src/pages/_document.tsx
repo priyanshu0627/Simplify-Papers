@@ -10,8 +10,8 @@ class MyDocument extends Document {
       <Html lang={AppConfig.locale}>
         <Head />
         <body>
-          <Main />
-          <NextScript />
+            <Main />
+            <NextScript />
         </body>
       </Html>
     );
