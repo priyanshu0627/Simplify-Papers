@@ -22,11 +22,22 @@
     "postbuild": "next-sitemap"
   },
   "dependencies": {
+    "@coreui/react": "^4.6.0",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/icons-material": "^5.11.9",
+    "@mui/material": "^5.11.9",
+    "bootstrap": "^5.2.3",
     "next": "^13.1.2",
     "next-seo": "^5.15.0",
     "next-sitemap": "^3.1.45",
+    "pdfjs-dist": "^3.3.122",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-bootstrap": "^2.7.2",
+    "react-dom": "^18.2.0",
+    "react-pdf": "^6.2.2",
+    "react-pro-sidebar": "^1.0.0",
+    "react-router-dom": "^6.8.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.4.2",
@@ -43,6 +54,7 @@
     "@types/jest": "^29.2.6",
     "@types/node": "^18.11.18",
     "@types/react": "^18.0.27",
+    "@types/react-pdf": "^6.2.0",
     "@typescript-eslint/eslint-plugin": "^5.48.2",
     "@typescript-eslint/parser": "^5.48.2",
     "autoprefixer": "^10.4.13",
