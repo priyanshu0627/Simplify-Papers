@@ -15,10 +15,9 @@ const PDFReader = () => {
   const [pageNumber, setPageNumber] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
 
-  function onDocumentLoadSuccess({ numPages } : any) {
-    setNumPages(numPages);
+  function onDocumentLoadSuccess({ pageNo }: any) {
+    setNumPages(pageNo);
     setIsLoading(false);
-
   }
 
   function onFileChange(event : any) {
@@ -36,9 +35,9 @@ const PDFReader = () => {
           }
       }
 
-    function handleHighlightOnClick() {
-      console.log('here');
-    }
+    // function handleHighlightOnClick() {
+    //   console.log('here');
+    // }
 
   function iterateAndHighlight(selection) {
     let it = selection.anchorNode.parentNode;
@@ -68,7 +67,7 @@ const PDFReader = () => {
         
         const posX = clientRect.x;
         const posY = clientRect.bottom + 20 + scrollTop;
-        document.body.insertAdjacentHTML('beforeend', '    <div id="share-snippet" style="position: absolute; top: '+posY+'px; left: '+posX+'px;"><div class="speech-bubble"><div class="share-inside" onClick={handleHighlightOnClick}> ToolBar </div></div></div>');
+        document.body.insertAdjacentHTML('beforeend', '    <div id="share-snippet" style="position: absolute; top: '+posY+'px; left: '+posX+'px;"><div class="speech-bubble"><div class="share-inside" className="text-theme-green" onClick={handleHighlightOnClick}> ToolBar </div></div></div>');
     }
 }
 
@@ -168,16 +167,16 @@ const PDFReader = () => {
     //   // }
     // });
     
-    function playAnimation(el) {
-      if (el.nodeType === Node.TEXT_NODE) {
-        el = el.parentNode;
-      }
+    // function playAnimation(el) {
+    //   if (el.nodeType === Node.TEXT_NODE) {
+    //     el = el.parentNode;
+    //   }
     
-      el.classList.remove('highlight');
-      setTimeout(() => {
-        el.classList.add('highlight');
-      }, 0);
-    }
+    //   el.classList.remove('highlight');
+    //   setTimeout(() => {
+    //     el.classList.add('highlight');
+    //   }, 0);
+    // }
 
     function debounce(fn, delay) {
       let timer = null;
