@@ -1,11 +1,13 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+import Avatar from '@mui/material/Avatar';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Avatar from '@mui/material/Avatar';
 
 function Header() {
   return (
@@ -15,7 +17,7 @@ function Header() {
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
-            className="me-auto my-2 my-lg-0"
+            className="my-2 mr-auto"
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
@@ -30,16 +32,26 @@ function Header() {
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
-          <Form className="d-flex">
+          <Form className="flex">
             <Form.Control
               type="search"
               placeholder="Search"
-              className="me-2"
+              className="mr-2"
               aria-label="Search"
             />
             <Button variant="outline-success">Search</Button>
           </Form>
-          <Avatar className='m-2'>P</Avatar>
+          <NavDropdown
+            className="m-2"
+            title="Profile"
+            id="navbarScrollingDropdown"
+          >
+            <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
+            <NavDropdown.Item href="#action4">Another action</NavDropdown.Item>
+            <NavDropdown.Divider />
+            <NavDropdown.Item href="#action5">Logout</NavDropdown.Item>
+          </NavDropdown>
+          <Avatar className="m-2">P</Avatar>
         </Navbar.Collapse>
       </Container>
     </Navbar>
