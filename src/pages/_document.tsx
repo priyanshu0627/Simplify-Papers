@@ -1,4 +1,5 @@
 import Document, { Head, Html, Main, NextScript } from 'next/document';
+import React from 'react';
 
 import { AppConfig } from '@/utils/AppConfig';
 
@@ -10,8 +11,8 @@ class MyDocument extends Document {
       <Html lang={AppConfig.locale}>
         <Head />
         <body>
-            <Main />
-            <NextScript />
+          <Main />
+          <NextScript />
         </body>
       </Html>
     );

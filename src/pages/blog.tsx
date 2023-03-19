@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import React from 'react';
 
 import { Meta } from '@/layouts/Meta';
 import { Main } from '@/templates/Main';

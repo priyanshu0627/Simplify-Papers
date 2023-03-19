@@ -1,14 +1,16 @@
-import React, { ChangeEvent } from 'react';
-import PDFPrinter from './PDFPrinter';
-import FastRewindIcon from '@mui/icons-material/FastRewind';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import DownloadIcon from '@mui/icons-material/Download';
 import FastForwardIcon from '@mui/icons-material/FastForward';
+import FastRewindIcon from '@mui/icons-material/FastRewind';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import ZoomOutIcon from '@mui/icons-material/ZoomOut';
-import DownloadIcon from '@mui/icons-material/Download';
+import type { ChangeEvent } from 'react';
+import React from 'react';
 
-const ControlPanel = (props : any) => {
+import PDFPrinter from './PDFPrinter';
+
+const ControlPanel = (props: any) => {
   const { file, pageNumber, numPages, setPageNumber, scale, setScale } = props;
 
   const isFirstPage = pageNumber === 1;
@@ -30,7 +32,7 @@ const ControlPanel = (props : any) => {
     if (!isLastPage) setPageNumber(numPages);
   };
 
-  const onPageChange = (e : ChangeEvent<HTMLInputElement>) => {
+  const onPageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setPageNumber(Number(value));
   };
@@ -50,28 +52,43 @@ const ControlPanel = (props : any) => {
   };
 
   return (
-    <div className="flex text-[16px] text-black rounded p-4 my-4 bg-white justify-between items-center">
-      <div className="flex justify-between items-center">
-        <FastRewindIcon className={` ${firstPageClass}`} onClick={goToFirstPage}/>
-        <ArrowLeftIcon className={` ${firstPageClass}`} onClick={goToPreviousPage}/>
-        <span className='flex items-center mx-1'>
+    <div className="my-4 flex items-center justify-between rounded bg-white p-4 text-[16px] text-black">
+      <div className="flex items-center justify-between">
+        <FastRewindIcon
+          className={` ${firstPageClass}`}
+          onClick={goToFirstPage}
+        />
+        <ArrowLeftIcon
+          className={` ${firstPageClass}`}
+          onClick={goToPreviousPage}
+        />
+        <span className="mx-1 flex items-center">
           Page
-          <input name="pageNumber" type="number" min={1} max={numPages || 1} className="mx-2 px-1 border-2 border-black rounded" value={pageNumber} onChange={onPageChange} />{' '}
-           of
+          <input
+            name="pageNumber"
+            type="number"
+            min={1}
+            max={numPages || 1}
+            className="mx-2 rounded border-2 border-black px-1"
+            value={pageNumber}
+            onChange={onPageChange}
+          />{' '}
+          of
         </span>
         {numPages}
-        <ArrowRightIcon className={`${lastPageClass}`} onClick={goToNextPage}/>
-        <FastForwardIcon className={`${lastPageClass}`} onClick={goToLastPage}/>
+        <ArrowRightIcon className={`${lastPageClass}`} onClick={goToNextPage} />
+        <FastForwardIcon
+          className={`${lastPageClass}`}
+          onClick={goToLastPage}
+        />
       </div>
-      <div className="flex justify-between items-center">
-        <ZoomOutIcon className={`${zoomInClass}`} onClick={zoomOut}/>
-        <span>
-          {(scale * 100).toFixed()}%
-        </span>
-        <ZoomInIcon className={`${zoomOutClass}`} onClick={zoomIn}/>
+      <div className="flex items-center justify-between">
+        <ZoomOutIcon className={`${zoomInClass}`} onClick={zoomOut} />
+        <span>{(scale * 100).toFixed()}%</span>
+        <ZoomInIcon className={`${zoomOutClass}`} onClick={zoomIn} />
       </div>
       <a href="/assets/docs/file-sample.pdf" download={true} title="download">
-        <DownloadIcon className='text-green-800	'/>
+        <DownloadIcon className="text-green-800	" />
       </a>
       <PDFPrinter file={file} />
     </div>

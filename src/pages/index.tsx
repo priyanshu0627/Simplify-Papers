@@ -1,9 +1,11 @@
+import React from 'react';
+import { ProSidebarProvider } from 'react-pro-sidebar';
+
+import Header from '@/components/Header';
+import PDFReader from '@/components/PDFReader';
+// import SideBar from '@/components/SideBar';
 import { Meta } from '@/layouts/Meta';
 import { Main } from '@/templates/Main';
-import PDFReader from '@/components/PDFReader';
-import SideBar from '@/components/SideBar';
-import { ProSidebarProvider } from 'react-pro-sidebar';
-import Header from '@/components/Header';
 
 const Index = () => {
   return (
@@ -17,10 +19,7 @@ const Index = () => {
         }
       >
         <Header />
-        <div className='flex bg-gray-900'>
-          <SideBar />
-          <PDFReader />
-        </div>
+        <PDFReader />
       </Main>
     </ProSidebarProvider>
   );

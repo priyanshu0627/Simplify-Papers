@@ -1,7 +1,7 @@
-import React from 'react';
 import PrintIcon from '@mui/icons-material/Print';
+import React from 'react';
 
-const PDFPrinter = ({ file } : any) => {
+const PDFPrinter = ({ file }: any) => {
   const print = () => {
     const pdfFrame = document.createElement('iframe');
     pdfFrame.style.visibility = 'hidden';
@@ -12,9 +12,7 @@ const PDFPrinter = ({ file } : any) => {
     pdfFrame.contentWindow.focus();
     pdfFrame.contentWindow.print();
   };
-  return (
-    <PrintIcon className='text-green-800' onClick={print}/>
-  );
+  return <PrintIcon className="text-green-800" onClick={print} />;
 };
 
 export default PDFPrinter;
