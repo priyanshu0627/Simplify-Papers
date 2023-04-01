@@ -19,3 +19,64 @@ a:hover {
 .content ul {
   @apply my-6;
 }
+
+.react-pdf__Page__canvas {
+  border-radius : 10px;
+}
+
+.speech-bubble {
+  position: relative;
+  background: #4294da;
+  border-radius: 0.4em;
+  color: white;
+}
+
+.speech-bubble:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border: 12px solid transparent;
+  border-bottom-color: #4294da;
+  border-top: 0;
+  margin-left: -12px;
+  margin-top: -12px;
+}
+
+.share-inside {
+  display: inline-block;
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 14px;
+  padding: 0.5rem 1rem;
+}
+
+.ps-menu-button:hover {
+  background-color: black!important;
+}
+
+.speech-bubble {
+	position: relative;
+	background: #44815a;
+	border-radius: .4em;
+}
+
+.speech-bubble:after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border: 0.375em solid transparent;
+	border-bottom-color: #44815a;
+	border-top: 0;
+	margin-left: -0.375em;
+	margin-top: -0.375em;
+}
+
+.custom-outline {
+  color: green;
+}
