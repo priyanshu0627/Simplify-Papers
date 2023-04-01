@@ -78,7 +78,9 @@ function AskQuestionCard() {
               Use MarkDown to enrich this comment.
             </div>
             <div className="mt-4 flex flex-row-reverse">
-              <Button variant="contained">ADD QUESTION</Button>
+              <Button variant="contained" className="bg-blue-700">
+                ADD QUESTION
+              </Button>
             </div>
           </div>
         </div>

@@ -2,8 +2,9 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import ShareIcon from '@mui/icons-material/Share';
+import SpellcheckIcon from '@mui/icons-material/Spellcheck';
 import Button from '@mui/material/Button';
 import React, { useEffect, useState } from 'react';
 
@@ -11,7 +12,8 @@ function QuestionCard(props: any) {
   const {
     upVotes,
     downVotes,
-    random,
+    accepted,
+    flag,
     question,
     askedBy,
     lastActivityPerson,
@@ -22,9 +24,8 @@ function QuestionCard(props: any) {
   const [bookmark, setBookmark] = useState(false);
   const [upVote, setUpVote] = useState(upVotes);
   const [downVote, setDownVote] = useState(downVotes);
-  const [flag, setFlag] = useState(0);
+  // const [flag, setFlag] = useState(0);
   const handleShareProject = () => {
-    console.log('here');
     setBookmark(!bookmark);
   };
 
@@ -39,19 +40,24 @@ function QuestionCard(props: any) {
   };
 
   const handleFlag = () => {
-    setFlag(flag + 1);
+    // setFlag(flag + 1);
   };
+
+  const handleCheckAnswer = () => {};
 
   useEffect(() => {
     // set bookmark state
-    // set upvote
+    // set upVote
     // set downVote
     // set flag
   }, [upVote, downVote, flag]);
 
   return (
     props && (
-      <div className="m-2 flex rounded border-zinc-600 bg-theme-grey p-2">
+      <div
+        className="m-2 flex rounded border-zinc-600 bg-theme-grey p-2"
+        onClick={props.handleSeeAns}
+      >
         <section className="flex flex-col	justify-between">
           <div>
             <div className="flex items-center	justify-around	">
@@ -71,18 +77,25 @@ function QuestionCard(props: any) {
               />
             </div>
             <div className="flex items-center	justify-around	">
-              <div className="text-xs">{random}</div>
-              <QuestionMarkIcon
-                className="text-theme-green"
-                onClick={handleFlag}
-              />
+              <div className="text-xs">{flag}</div>
+              {accepted ? (
+                <SpellcheckIcon
+                  className="text-theme-green"
+                  onClick={handleFlag}
+                />
+              ) : (
+                <CheckBoxOutlineBlankIcon
+                  className="text-theme-green"
+                  onClick={handleCheckAnswer}
+                />
+              )}
             </div>
           </div>
           <div>
             <Button
               size="small"
               variant="contained"
-              sx={{ background: '#45815a', fontSize: '8px' }}
+              sx={{ background: '#45815a!important', fontSize: '8px' }}
               className="m-1"
             >
               summary
@@ -96,7 +109,7 @@ function QuestionCard(props: any) {
             <Button
               size="small"
               variant="contained"
-              sx={{ background: '#45815a', fontSize: '8px' }}
+              sx={{ background: '#45815a!important', fontSize: '8px' }}
               className="m-1"
             >
               {askedBy}
@@ -109,7 +122,7 @@ function QuestionCard(props: any) {
             <Button
               size="small"
               variant="contained"
-              sx={{ background: '#45815a', fontSize: '8px' }}
+              sx={{ background: '#45815a!important', fontSize: '8px' }}
               className="m-1"
             >
               {lastActivityPerson}
@@ -121,7 +134,7 @@ function QuestionCard(props: any) {
                 key={index}
                 size="small"
                 variant="contained"
-                sx={{ background: '#45815a', fontSize: '8px' }}
+                sx={{ background: '#45815a!important', fontSize: '8px' }}
                 className="m-1"
               >
                 {tag}

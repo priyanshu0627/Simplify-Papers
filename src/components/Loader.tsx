@@ -1,10 +1,10 @@
 import React from 'react';
 
-type props = {
+type Props = {
   isLoading: Boolean;
 };
 
-const Loader = (props: props) => {
+const Loader = (props: Props) => {
   if (!props.isLoading) return null;
   return (
     <div id="loader" className="">

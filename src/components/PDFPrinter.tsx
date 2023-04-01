@@ -9,8 +9,8 @@ const PDFPrinter = ({ file }: any) => {
 
     document.body.appendChild(pdfFrame);
 
-    pdfFrame.contentWindow.focus();
-    pdfFrame.contentWindow.print();
+    pdfFrame.contentWindow!.focus();
+    pdfFrame.contentWindow!.print();
   };
   return <PrintIcon className="text-green-800" onClick={print} />;
 };

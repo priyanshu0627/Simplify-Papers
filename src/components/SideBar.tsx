@@ -3,23 +3,25 @@ import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
-import ShareIcon from '@mui/icons-material/Share';
+// import ShareIcon from '@mui/icons-material/Share';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import React, { useEffect, useState } from 'react';
+import { Document, Outline } from 'react-pdf';
 import { Menu, MenuItem, Sidebar, useProSidebar } from 'react-pro-sidebar';
 
-function SideBar() {
+function SideBar(props: any) {
   const { collapseSidebar } = useProSidebar();
   const [bookmark, setBookmark] = useState(false);
+  // const [file, setFile] = useState('./file-example_PDF_1MB.pdf');
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
   );
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+  // const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -72,11 +74,11 @@ function SideBar() {
             className=" flex flex-row	"
           >
             Project Name{' '}
-            <ShareIcon
+            {/* <ShareIcon
               aria-describedby={id}
               variant="contained"
               onClick={handleClick}
-            />
+            /> */}
           </MenuItem>
           <MenuItem
             rootStyles={{ '&:hover': { backgroundColor: 'black!important' } }}
@@ -84,11 +86,20 @@ function SideBar() {
             {' '}
             Test Title
           </MenuItem>
-          <MenuItem> Test Content</MenuItem>
-          <MenuItem> Test Content</MenuItem>
-          <MenuItem> Test Content</MenuItem>
-          <MenuItem> Test Content</MenuItem>
-          <MenuItem> Test Content</MenuItem>
+          <MenuItem>
+            <Document file={props.file} className="flex justify-center">
+              <Outline onItemClick={props?.jumpToOutline} />
+            </Document>
+          </MenuItem>
+          {/* <MenuItem>
+            <Outline
+              file={props?.file}
+              onItemClick={props?.jumpToOutline}
+              onLoadError={(error) =>
+                alert(`Error while retrieving the outline! ${error.message}`)
+              }
+            />
+          </MenuItem> */}
         </Menu>
       </Sidebar>
       <main>
