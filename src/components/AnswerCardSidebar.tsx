@@ -205,7 +205,7 @@ function AnswerCardSidebar() {
 
       <section className="my-4 flex flex-col justify-between pb-4 text-sm">
         <div>2 Answers</div>
-        <div className="my-2 flex flex-row rounded-lg border-2 border-solid border-theme-green py-2">
+        <div className="my-2 flex flex-row rounded-lg border-2 border-solid border-theme-green bg-theme-lightGreen py-2">
           <div className="mr-3 flex w-[15%] flex-col justify-start">
             <div className="flex items-center	justify-around">
               <ArrowDropUpIcon
@@ -243,7 +243,7 @@ function AnswerCardSidebar() {
             </div>
           </div>
         </div>
-        <div className="my-2 flex flex-row rounded-lg border-2 border-solid border-theme-green py-2">
+        <div className="my-2 flex flex-row rounded-lg border-2 border-solid border-theme-green bg-theme-lightGreen py-2">
           <div className="mr-3 flex w-[15%] flex-col justify-start">
             <div className="flex items-center	justify-around">
               <ArrowDropUpIcon
