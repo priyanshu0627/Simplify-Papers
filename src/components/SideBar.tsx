@@ -131,7 +131,6 @@ const SideBar = (props: any) => {
             >
               <Document file={props.file} className="flex justify-center">
                 <Outline
-                  file={props?.file}
                   onItemClick={props?.jumpToOutline}
                   onLoadError={(error) =>
                     alert(

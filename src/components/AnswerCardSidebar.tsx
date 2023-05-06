@@ -7,7 +7,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ShareIcon from '@mui/icons-material/Share';
 import SpellcheckIcon from '@mui/icons-material/Spellcheck';
 import { Avatar, Button, TextField } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const data: any = {
   id: 1,
@@ -29,8 +29,9 @@ function AnswerCardSidebar() {
   const [upVote, setUpVote] = useState(data.upVotes);
   const [downVote, setDownVote] = useState(data.downVotes);
   const [like, hitLike] = useState(false);
-  const [userAnswere, setUserAnwere] = useState('');
+  const [userAnswer, setUserAnswer] = useState('');
   const [flag, setFlag] = useState(data.flag);
+
   const handleShareProject = () => {
     setBookmark(!bookmark);
   };
@@ -56,6 +57,11 @@ function AnswerCardSidebar() {
   const handleCheckAnswer = () => {};
   const handleSubmitAns = () => {};
 
+  useEffect(() => {
+    setUserAnswer('');
+    setFlag(data.flag);
+  }, []);
+
   return (
     <div className="flex flex-col p-3">
       <section className="border-b-2 border-solid border-theme-green">
@@ -67,11 +73,11 @@ function AnswerCardSidebar() {
           <div className="my-1 text-lg">What is Lorem Ipsum?</div>
           <div className="text-xs text-gray-700">
             Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not
+            industry. Lorem Ipsum has been the industry standard dummy text
+            since the 1500s, when an unknown printer took a galley of type and
+            scrambled it to make a type specimen book. It has survived not only
             only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularised in the 1960s
+            remaining essentially unchanged. It was popularized in the 1960s
             with the release of Letraset sheets containing Lorem Ipsum passages,
             and more recently with desktop publishing software like Aldus
             PageMaker including versions of Lorem Ipsum.
@@ -112,7 +118,7 @@ function AnswerCardSidebar() {
           </div>
           <div className="flex items-center	justify-between">
             <div className="text-xs text-gray-700">{flag}</div>
-            {true ? (
+            {flag ? (
               <SpellcheckIcon
                 className="text-theme-green"
                 onClick={handleFlag}
@@ -128,7 +134,10 @@ function AnswerCardSidebar() {
             <div className="text-xs text-gray-700">{data.views}</div>
             <RemoveRedEye fontSize="small" className="text-theme-green" />
           </div>
-          <div className="flex items-center	justify-end	">
+          <div
+            className="flex items-center	justify-end	"
+            onClick={handleShareProject}
+          >
             <ShareIcon className="text-theme-green" />
           </div>
         </div>
@@ -192,7 +201,7 @@ function AnswerCardSidebar() {
           label="Answer"
           maxRows={4}
           placeholder="Type Your Ans Here..."
-          value={userAnswere}
+          value={userAnswer}
           sx={{ width: '100%' }}
           variant="filled"
           color="success"
@@ -231,7 +240,7 @@ function AnswerCardSidebar() {
             <div className="text-lg">Ans Heading</div>
             <div className="text-xs text-gray-700">
               Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
+              industry. Lorem Ipsum has been the industry standard dummy text
               ever since the 1500s, when an unknown printer took a galley of
               type and scrambled it to make a type specimen book. It has
               survived not only five centuries, but also the leap into
@@ -269,7 +278,7 @@ function AnswerCardSidebar() {
             <div className="text-lg">Ans Heading</div>
             <div className="text-xs text-gray-700">
               Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
+              industry. Lorem Ipsum has been the industry standard dummy text
               ever since the 1500s, when an unknown printer took a galley of
               type and scrambled it to make a type specimen book. It has
               survived not only five centuries, but also the leap into
