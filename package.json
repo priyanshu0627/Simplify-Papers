@@ -27,7 +27,9 @@
     "@emotion/styled": "^11.10.6",
     "@mui/icons-material": "^5.11.9",
     "@mui/material": "^5.11.9",
+    "@reduxjs/toolkit": "^1.9.3",
     "bootstrap": "^5.2.3",
+    "jquery": "^3.6.4",
     "next": "^13.1.2",
     "next-seo": "^5.15.0",
     "next-sitemap": "^3.1.45",
@@ -37,6 +39,7 @@
     "react-dom": "^18.2.0",
     "react-pdf": "^6.2.2",
     "react-pro-sidebar": "^1.0.0",
+    "react-redux": "^8.0.5",
     "react-router-dom": "^6.8.1"
   },
   "devDependencies": {
@@ -52,6 +55,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@types/jest": "^29.2.6",
+    "@types/jquery": "^3.5.16",
     "@types/node": "^18.11.18",
     "@types/react": "^18.0.27",
     "@types/react-pdf": "^6.2.0",
