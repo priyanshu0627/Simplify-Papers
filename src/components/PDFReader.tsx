@@ -1,11 +1,10 @@
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 
-import $ from 'jquery';
-import dynamic from 'next/dynamic';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 
+import highlightContent from '../utils/HighlightService';
 import ControlPanel from './ControlPanel';
 import Loader from './Loader';
 import PDFSideBar from './PDFSideBar';
@@ -56,7 +55,6 @@ const PDFReader = () => {
     //   //   it = it.nextElementSibling;
     //   // }
     // }
-
     // function handlerFunction() {
     //   if (document.contains(document.getElementById('share-snippet'))) {
     //     document.getElementById('share-snippet')!.remove();
@@ -65,7 +63,6 @@ const PDFReader = () => {
     //     const selection = window.getSelection();
     //     const range = getRangeObject(selection);
     //     const clientRect = range.getBoundingClientRect();
-
     //     iterateAndHighlight(selection);
     //     const scrollTop =
     //       window.pageYOffset !== undefined
@@ -181,61 +178,57 @@ const PDFReader = () => {
   //   return () => {};
   // }, [clickTiggered]);
 
+  // function highlightContent() {
+  //   try {
+  //     const metaData: any = {};
+  //     let start = false;
+  //     let end = false;
+  //     // const range: any = window.getSelection();
+  //     const range = document?.getSelection()?.getRangeAt(0);
+  //     Object.values(
+  //       $('.react-pdf__Page__textContent.textLayer')[0].children).forEach((element: any, index: any) => {
+  //       if (element === range?.startContainer?.parentElement) {
+  //         metaData.startContainerIndex = index;
+  //         if (!start) {
+  //           start = true;
+  //           metaData.reverseHighlight = false;
+  //         } else if (start && !end) {
+  //           end = true;
+  //         }
+  //       }
+  //       if (element === range?.endContainer?.parentElement) {
+  //         metaData.endContainerIndex = index;
+  //         if (!start) {
+  //           start = true;
+  //           metaData.reverseHighlight = true;
+  //         } else if (start && !end) {
+  //           end = true;
+  //         }
+  //       }
+  //       // middle mei hai
+  //       if (start && !end) {
+  //         // markEntireLine(element);
+  //         // const newSpanNode = document.createElement('span');
+  //         const highlightNode = document.createElement('mark');
+  //         highlightNode.textContent = element.textContent;
+  //         element.textContent = '';
+  //         element.appendChild(highlightNode);
+  //         // element.innerHtml = highlightNode.outerHTML;
+  //         // console.log(element.value);
+  //       }
+  //     });
+  //     console.table(metaData);
+  //   } catch (error) {
+  //     throw new Error('Function not implemented.');
+  //   }
+  // }
   const onClick = () => {
     /** Handle mousedown or click */
-    debugger;
+    // debugger;
     // highlightContent();
   };
 
-  function highlightContent() {
-    try {
-      debugger;
-      const metaData: any = {};
-      let start = false;
-      let end = false;
-      // const range: any = window.getSelection();
-      const range = document?.getSelection().getRangeAt(0);
-      console.log($('.react-pdf__Page__textContent.textLayer')[0].children);
-      Object.values(
-        $('.react-pdf__Page__textContent.textLayer')[0].children
-      ).forEach((element, index) => {
-        if (element === range?.startContainer?.parentElement) {
-          metaData.startContainerIndex = index;
-          if (!start) {
-            start = true;
-            metaData.reverseHighlight = false;
-          } else if (start && !end) {
-            end = true;
-          }
-        }
-        if (element === range?.endContainer?.parentElement) {
-          metaData.endContainerIndex = index;
-          if (!start) {
-            start = true;
-            metaData.reverseHighlight = true;
-          } else if (start && !end) {
-            end = true;
-          }
-        }
-        // middle mei hai
-        if (start && !end) {
-          // markEntireLine(element);
-          // const newSpanNode = document.createElement('span');
-          const highlightNode = document.createElement('mark');
-          highlightNode.textContent = element.textContent;
-          element.textContent = '';
-          element.appendChild(highlightNode);
-          // element.innerHtml = highlightNode.outerHTML;
-          // console.log(element.value);
-        }
-      });
-      console.table(metaData);
-    } catch (error) {
-      throw new Error('Function not implemented.');
-    }
-  }
-
-  const handleMouseUp = (event): any => {
+  const handleMouseUp = (event: any) => {
     if (event.button !== 2) {
       setClickTriggered(true);
       setTimeout(() => setClickTriggered(false), 10);
