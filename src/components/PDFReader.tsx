@@ -4,6 +4,7 @@ import 'react-pdf/dist/esm/Page/TextLayer.css';
 import React, { useEffect, useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 
+import highlightContent from '../utils/HighlightService';
 import ControlPanel from './ControlPanel';
 import Loader from './Loader';
 import PDFSideBar from './PDFSideBar';
@@ -33,6 +34,14 @@ const PDFReader = () => {
 
   useEffect(() => {}, []);
 
+  const handleMouseUp = (event: any) => {
+    if (event.button !== 2) {
+      // setClickTriggered(true);
+      // setTimeout(() => setClickTriggered(false), 10);
+      highlightContent();
+    }
+  };
+
   return (
     <div className="flex bg-gray-900">
       <SideBar jumpToOutline={clickTOC} file={file} />
@@ -47,13 +56,15 @@ const PDFReader = () => {
             setPageNumber={setPageNumber}
             file={file}
           />
-          <Document
-            file={file}
-            onLoadSuccess={onDocumentLoadSuccess}
-            className="flex justify-center"
-          >
-            <Page pageNumber={pageNumber} scale={scale} />
-          </Document>
+          <section onMouseUp={handleMouseUp}>
+            <Document
+              file={file}
+              onLoadSuccess={onDocumentLoadSuccess}
+              className="flex justify-center"
+            >
+              <Page pageNumber={pageNumber} scale={scale} />
+            </Document>
+          </section>
         </section>
         <section className="basis-2/5">
           <PDFSideBar onFileChange={onFileChange} />
@@ -64,3 +75,7 @@ const PDFReader = () => {
 };
 
 export default PDFReader;
+
+// export default dynamic(() => Promise.resolve(PDFReader), {
+//   ssr: false,
+// });
