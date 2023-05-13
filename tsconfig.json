@@ -38,6 +38,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
+      "@ui/*": ["./src/components/ui*"],
       "@/public/*": ["./public/*"]
     }
   },
@@ -46,6 +47,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/utils/HighlightService.ts"
+    "src/utils/HighlightService.ts",
+    "src/components/QuestionsData.ts"
   ]
 }

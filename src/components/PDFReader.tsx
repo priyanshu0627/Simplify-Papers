@@ -6,6 +6,7 @@ import { Document, Page, pdfjs } from 'react-pdf';
 
 import highlightContent from '../utils/HighlightService';
 import ControlPanel from './ControlPanel';
+import FloatingHighlightMenu from './FloatingHighlightingMenu';
 import Loader from './Loader';
 import PDFSideBar from './PDFSideBar';
 import SideBar from './SideBar';
@@ -18,6 +19,7 @@ const PDFReader = () => {
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
+  const [floatingHighlightMenu, setFloatingHighlightMenu] = useState(false);
 
   const clickTOC = ({ pageNumber: itemPageNumber }: any) => {
     setPageNumber(itemPageNumber);
@@ -47,6 +49,10 @@ const PDFReader = () => {
       <SideBar jumpToOutline={clickTOC} file={file} />
       <div className="flex grow">
         <Loader isLoading={isLoading} />
+        <FloatingHighlightMenu
+          isOpen={floatingHighlightMenu}
+          setIsOpen={setFloatingHighlightMenu}
+        />
         <section id="pdf-section" className="h-full basis-3/5">
           <ControlPanel
             scale={scale}
