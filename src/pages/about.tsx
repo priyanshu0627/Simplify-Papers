@@ -3,6 +3,8 @@ import React from 'react';
 import { Meta } from '@/layouts/Meta';
 import { Main } from '@/templates/Main';
 
+import Home from './home';
+
 const About = () => (
   <Main meta={<Meta title="Lorem ipsum" description="Lorem ipsum" />}>
     <p>
@@ -17,6 +19,7 @@ const About = () => (
       voluptatibus distinctio recusandae autem esse explicabo molestias officia
       placeat, accusamus aut saepe.
     </p>
+    <Home />
   </Main>
 );
 
