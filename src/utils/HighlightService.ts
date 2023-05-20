@@ -172,6 +172,7 @@ export default function highlightContent() {
       }
     });
     console.table(metaData);
+    return metaData;
   } catch (error) {
     throw new Error('Function not implemented.');
   }
