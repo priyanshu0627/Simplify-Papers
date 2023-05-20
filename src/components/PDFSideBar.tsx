@@ -1,5 +1,9 @@
 import { Button, OutlinedInput } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
+
+import { addNewQuestion } from '@/redux/features/questionDataSlice';
+import { useAppDispatch } from '@/redux/hooks';
 
 import type { QuestionsDataType } from '../Types/Types';
 import AnswerCardSidebar from './AnswerCardSidebar';
@@ -17,6 +21,9 @@ function PDFSideBar({ onFileChange }: any) {
   const [sidebarSection, setSidebarSection] = useState(
     SidebarSection.allQuestions
   );
+  const allQuestions = useSelector((state: any) => state.questionDataSlice);
+  const dispatch = useAppDispatch();
+  const questionComponentRef = useRef(null);
 
   const handleAskQuestionButton = () => {
     // if sidebarSection state is not allQuestions then set it to all question otherwise if it is allQuestions then set it ask question
@@ -34,7 +41,18 @@ function PDFSideBar({ onFileChange }: any) {
 
   useEffect(() => {
     // set questions data from the api here
+    // QuestionsData.forEach((question) => {
+    //   dispatch(addNewQuestion({ newQuestionData: question }));
+    // });
   }, []);
+
+  const scrollToBottom = () => {
+    // questionComponentRef.current.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [allQuestions]);
 
   return (
     <div className="m-4 flex h-screen flex-col justify-start rounded-lg bg-white p-1 text-black">
@@ -67,8 +85,8 @@ function PDFSideBar({ onFileChange }: any) {
         switch (sidebarSection) {
           case SidebarSection.allQuestions:
             return (
-              <section className="overflow-auto">
-                {QuestionsData?.map((questionData: QuestionsDataType) => (
+              <section className="overflow-auto" ref={questionComponentRef}>
+                {allQuestions?.map((questionData: QuestionsDataType) => (
                   <QuestionCard
                     key={questionData.id}
                     {...questionData}

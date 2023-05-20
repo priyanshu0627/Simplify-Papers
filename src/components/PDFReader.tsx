@@ -1,12 +1,19 @@
+'use client';
+
+/* eslint-disable import/no-extraneous-dependencies */
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 
 import React, { useEffect, useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 
+import { addHighlight } from '@/redux/features/Highlights';
+import { addNewQuestion } from '@/redux/features/questionDataSlice';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+
 import highlightContent from '../utils/HighlightService';
 import ControlPanel from './ControlPanel';
-import FloatingHighlightMenu from './FloatingHighlightingMenu';
+// import FloatingHighlightMenu from './FloatingHighlightingMenu';
 import Loader from './Loader';
 import PDFSideBar from './PDFSideBar';
 import SideBar from './SideBar';
@@ -19,7 +26,9 @@ const PDFReader = () => {
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
-  const [floatingHighlightMenu, setFloatingHighlightMenu] = useState(false);
+  const dispatch = useAppDispatch();
+  const count = useAppSelector((state) => state.Highlights);
+  // const [floatingHighlightMenu, setFloatingHighlightMenu] = useState(false);
 
   const clickTOC = ({ pageNumber: itemPageNumber }: any) => {
     setPageNumber(itemPageNumber);
@@ -37,10 +46,38 @@ const PDFReader = () => {
   useEffect(() => {}, []);
 
   const handleMouseUp = (event: any) => {
+    debugger;
+    console.log(count);
     if (event.button !== 2) {
-      // setClickTriggered(true);
-      // setTimeout(() => setClickTriggered(false), 10);
-      highlightContent();
+      const metadata = highlightContent();
+      if (metadata) {
+        metadata.pageNumber = pageNumber;
+        dispatch(
+          addHighlight({
+            id: 1,
+            pdf: 1,
+            currHighlight: metadata,
+          })
+        );
+        dispatch(
+          addNewQuestion({
+            newQuestionData: {
+              id: 999,
+              upVotes: 999,
+              downVotes: 999,
+              liked: 999,
+              accepted: true,
+              flag: 999,
+              views: 999,
+              question: 'redux',
+              askedBy: 'redux',
+              lastActivityTime: 'just now',
+              lastActivityPerson: 'Mr-redux',
+              tags: ['React', 'redux'],
+            },
+          })
+        );
+      }
     }
   };
 
@@ -49,10 +86,10 @@ const PDFReader = () => {
       <SideBar jumpToOutline={clickTOC} file={file} />
       <div className="flex grow">
         <Loader isLoading={isLoading} />
-        <FloatingHighlightMenu
+        {/* <FloatingHighlightMenu
           isOpen={floatingHighlightMenu}
           setIsOpen={setFloatingHighlightMenu}
-        />
+        /> */}
         <section id="pdf-section" className="h-full basis-3/5">
           <ControlPanel
             scale={scale}
