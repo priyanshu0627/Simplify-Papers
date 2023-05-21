@@ -11,7 +11,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 
 function Header() {
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar bg="light" expand="lg" className="stickyNavbar" fixed="top">
       <Container fluid>
         <Navbar.Brand href="#">Simplify Papers</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />

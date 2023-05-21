@@ -92,7 +92,7 @@ const PDFReader = () => {
   };
 
   return (
-    <div className="flex bg-gray-900">
+    <div className="mt-20 flex bg-gray-900">
       <SideBar jumpToOutline={clickTOC} file={file} />
       <div className="flex grow">
         <Loader isLoading={isLoading} />
@@ -100,7 +100,7 @@ const PDFReader = () => {
           isOpen={floatingHighlightMenu}
           setIsOpen={setFloatingHighlightMenu}
         /> */}
-        <button onClick={testRedraw}>test</button>
+        {/* <button onClick={testRedraw}>test</button> */}
         <section id="pdf-section" className="h-full basis-3/5">
           <ControlPanel
             scale={scale}
