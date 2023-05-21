@@ -177,3 +177,29 @@ export default function highlightContent() {
     throw new Error('Function not implemented.');
   }
 }
+
+const highlightElement = (element: any) => {
+  const highlightNode = document.createElement('mark');
+  highlightNode.textContent = element.textContent;
+  element.textContent = '';
+  element.appendChild(highlightNode);
+};
+
+export const reDrawHighlight = (metadata: any) => {
+  const container = document.getElementsByClassName(
+    'react-pdf__Page__textContent'
+  )[0];
+  const spans = container?.getElementsByTagName('span');
+  if (!spans) return null;
+  const startContainer = metadata.startContainerIndex;
+  const endContainer = metadata.endContainerIndex;
+
+  if (metadata.reverseHighlight) {
+    // console.log('test');
+  } else {
+    for (let i = startContainer; i < endContainer; i += 1) {
+      const currContainer = spans[i];
+      highlightElement(currContainer);
+    }
+  }
+};

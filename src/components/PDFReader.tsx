@@ -11,7 +11,7 @@ import { addHighlight } from '@/redux/features/Highlights';
 import { addNewQuestion } from '@/redux/features/questionDataSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 
-import highlightContent from '../utils/HighlightService';
+import highlightContent, { reDrawHighlight } from '../utils/HighlightService';
 import ControlPanel from './ControlPanel';
 // import FloatingHighlightMenu from './FloatingHighlightingMenu';
 import Loader from './Loader';
@@ -81,6 +81,16 @@ const PDFReader = () => {
     }
   };
 
+  const testRedraw = () => {
+    const testData = {
+      startContainerIndex: 6,
+      reverseHighlight: false,
+      endContainerIndex: 8,
+      pageNumber: 1,
+    };
+    reDrawHighlight(testData);
+  };
+
   return (
     <div className="flex bg-gray-900">
       <SideBar jumpToOutline={clickTOC} file={file} />
@@ -90,6 +100,7 @@ const PDFReader = () => {
           isOpen={floatingHighlightMenu}
           setIsOpen={setFloatingHighlightMenu}
         /> */}
+        <button onClick={testRedraw}>test</button>
         <section id="pdf-section" className="h-full basis-3/5">
           <ControlPanel
             scale={scale}

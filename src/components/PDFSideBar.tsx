@@ -2,14 +2,14 @@ import { Button, OutlinedInput } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { addNewQuestion } from '@/redux/features/questionDataSlice';
+// import { addNewQuestion } from '@/redux/features/questionDataSlice';
 import { useAppDispatch } from '@/redux/hooks';
 
 import type { QuestionsDataType } from '../Types/Types';
 import AnswerCardSidebar from './AnswerCardSidebar';
 import AskQuestionCard from './AskQuestionCard';
 import QuestionCard from './QuestionCard';
-import { QuestionsData } from './QuestionsData';
+// import { QuestionsData } from './QuestionsData';
 
 const SidebarSection = {
   allQuestions: 'allQuestions',
@@ -22,7 +22,7 @@ function PDFSideBar({ onFileChange }: any) {
     SidebarSection.allQuestions
   );
   const allQuestions = useSelector((state: any) => state.questionDataSlice);
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   const questionComponentRef = useRef(null);
 
   const handleAskQuestionButton = () => {
