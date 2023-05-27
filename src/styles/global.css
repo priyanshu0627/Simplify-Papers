@@ -109,3 +109,9 @@ a:hover {
 .menuItemOutline a.ps-menu-button {
   padding: 0px!important;
 }
+
+.stickyNavbar {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}

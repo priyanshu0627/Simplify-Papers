@@ -6,6 +6,7 @@ import { decrement, increment, reset } from '@/redux/features/counterSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 
 export default function Home() {
+  // debugger;
   const count = useAppSelector((state) => state.counterReducer.value);
   const dispatch = useAppDispatch();
 
