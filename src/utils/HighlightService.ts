@@ -198,7 +198,7 @@ export const reDrawHighlight = (metadata: any) => {
     // console.log('test');
   } else {
     for (let i = startContainer; i < endContainer; i += 1) {
-      const currContainer = spans[i];
+      const currContainer = spans[i - 1];
       highlightElement(currContainer);
     }
   }

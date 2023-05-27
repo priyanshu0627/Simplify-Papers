@@ -57,6 +57,7 @@ function QuestionCard(props: any) {
       <div
         className="m-2 flex rounded border-zinc-600 bg-theme-grey p-2"
         onClick={props.handleSeeAns}
+        onMouseOver={props.testRedraw}
       >
         <section className="flex flex-col	justify-between">
           <div>

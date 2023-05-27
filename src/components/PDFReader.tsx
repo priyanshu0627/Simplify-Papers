@@ -74,6 +74,7 @@ const PDFReader = () => {
               lastActivityTime: 'just now',
               lastActivityPerson: 'Mr-redux',
               tags: ['React', 'redux'],
+              highlight: metadata,
             },
           })
         );
@@ -100,7 +101,7 @@ const PDFReader = () => {
           isOpen={floatingHighlightMenu}
           setIsOpen={setFloatingHighlightMenu}
         /> */}
-        <button onClick={testRedraw}>test</button>
+        {/* <button onClick={testRedraw}>test</button> */}
         <section id="pdf-section" className="h-full basis-3/5">
           <ControlPanel
             scale={scale}

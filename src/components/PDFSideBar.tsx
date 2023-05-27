@@ -9,6 +9,7 @@ import type { QuestionsDataType } from '../Types/Types';
 import AnswerCardSidebar from './AnswerCardSidebar';
 import AskQuestionCard from './AskQuestionCard';
 import QuestionCard from './QuestionCard';
+import { reDrawHighlight } from '@/utils/HighlightService';
 // import { QuestionsData } from './QuestionsData';
 
 const SidebarSection = {
@@ -37,6 +38,17 @@ function PDFSideBar({ onFileChange }: any) {
   const handleAnswerClick = (questionData: QuestionsDataType) => {
     console.log(questionData);
     setSidebarSection(SidebarSection.seeAnswer);
+  };
+
+  const testRedraw = (questionData: any) => {
+    // console.log(questionData);
+    // const testData = {
+    //   startContainerIndex: 6,
+    //   reverseHighlight: false,
+    //   endContainerIndex: 8,
+    //   pageNumber: 1,
+    // };
+    reDrawHighlight(questionData.highlight);
   };
 
   useEffect(() => {
@@ -90,6 +102,7 @@ function PDFSideBar({ onFileChange }: any) {
                   <QuestionCard
                     key={questionData.id}
                     {...questionData}
+                    testRedraw={() => testRedraw(questionData)}
                     handleSeeAns={() => handleAnswerClick(questionData)}
                   />
                 ))}
