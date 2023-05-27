@@ -14,6 +14,7 @@ type QuestionDataState = {
   lastActivityTime: string;
   lastActivityPerson: string;
   tags: string[];
+  highlight: any;
 };
 
 const initialState = [] as QuestionDataState[];

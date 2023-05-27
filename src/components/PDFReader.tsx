@@ -74,6 +74,7 @@ const PDFReader = () => {
               lastActivityTime: 'just now',
               lastActivityPerson: 'Mr-redux',
               tags: ['React', 'redux'],
+              highlight: metadata,
             },
           })
         );
