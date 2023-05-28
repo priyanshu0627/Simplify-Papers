@@ -138,6 +138,12 @@ export default function highlightContent(pageNumber: number) {
     let start = false;
     let end = false;
     const range = document?.getSelection()?.getRangeAt(0);
+
+    if (range && range.collapsed) {
+      range.collapse();
+      return;
+    }
+
     Object.values(
       $('.react-pdf__Page__textContent.textLayer')[0].children
     ).forEach((element: any, index: any) => {
