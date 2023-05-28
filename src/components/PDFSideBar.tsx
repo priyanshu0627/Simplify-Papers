@@ -1,15 +1,17 @@
+/* eslint-disable no-debugger */
+/* eslint-disable no-console */
 import { Button, OutlinedInput } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 // import { addNewQuestion } from '@/redux/features/questionDataSlice';
 import { useAppDispatch } from '@/redux/hooks';
+import { reDrawHighlight } from '@/utils/HighlightService';
 
 import type { QuestionsDataType } from '../Types/Types';
 import AnswerCardSidebar from './AnswerCardSidebar';
 import AskQuestionCard from './AskQuestionCard';
 import QuestionCard from './QuestionCard';
-import { reDrawHighlight } from '@/utils/HighlightService';
 // import { QuestionsData } from './QuestionsData';
 
 const SidebarSection = {
@@ -40,23 +42,16 @@ function PDFSideBar({ onFileChange }: any) {
     setSidebarSection(SidebarSection.seeAnswer);
   };
 
-  const testRedraw = (questionData: any) => {
-    // console.log(questionData);
-    // const testData = {
-    //   startContainerIndex: 6,
-    //   reverseHighlight: false,
-    //   endContainerIndex: 8,
-    //   pageNumber: 1,
-    // };
+  const reDrawHighlightOnHover = (questionData: QuestionsDataType) => {
+    debugger;
     reDrawHighlight(questionData.highlight);
   };
 
-  useEffect(() => {
-    // set questions data from the api here
-    // QuestionsData.forEach((question) => {
-    //   dispatch(addNewQuestion({ newQuestionData: question }));
-    // });
-  }, []);
+  const deleteHighlight = (questionData: QuestionsDataType) => {
+    console.log(questionData);
+  };
+
+  useEffect(() => {}, []);
 
   const scrollToBottom = () => {
     // questionComponentRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -102,7 +97,8 @@ function PDFSideBar({ onFileChange }: any) {
                   <QuestionCard
                     key={questionData.id}
                     {...questionData}
-                    testRedraw={() => testRedraw(questionData)}
+                    testRedraw={() => reDrawHighlightOnHover(questionData)}
+                    deleteHighlight={() => deleteHighlight(questionData)}
                     handleSeeAns={() => handleAnswerClick(questionData)}
                   />
                 ))}

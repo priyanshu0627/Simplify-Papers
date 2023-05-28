@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 // eslint-disable-next-line import/no-extraneous-dependencies
 import $ from 'jquery';
 import { v4 as uuidv4 } from 'uuid';
@@ -131,12 +132,11 @@ export function onHighlightAction(
 //   console.table(metaData);
 // }
 
-export default function highlightContent() {
+export default function highlightContent(pageNumber: number) {
   try {
     const metaData: any = {};
     let start = false;
     let end = false;
-    // const range: any = window.getSelection();
     const range = document?.getSelection()?.getRangeAt(0);
     Object.values(
       $('.react-pdf__Page__textContent.textLayer')[0].children
@@ -161,28 +161,49 @@ export default function highlightContent() {
       }
       // middle mei hai
       if (start && !end) {
-        // markEntireLine(element);
-        // const newSpanNode = document.createElement('span');
         const highlightNode = document.createElement('mark');
         highlightNode.textContent = element.textContent;
         element.textContent = '';
         element.appendChild(highlightNode);
-        // element.innerHtml = highlightNode.outerHTML;
-        // console.log(element.value);
       }
     });
     console.table(metaData);
+    metaData.pageNumber = pageNumber;
     return metaData;
   } catch (error) {
-    throw new Error('Function not implemented.');
+    throw new Error('Function highlight content not implemented!');
   }
 }
 
 const highlightElement = (element: any) => {
   const highlightNode = document.createElement('mark');
-  highlightNode.textContent = element.textContent;
-  element.textContent = '';
-  element.appendChild(highlightNode);
+  if (element && element.textContent) {
+    highlightNode.textContent = element.textContent;
+    element.textContent = '';
+    element.appendChild(highlightNode);
+  }
+};
+
+export const reDrawAllHighlight = (allHighlights: any) => {
+  debugger;
+  allHighlights.forEach((element: any) => {
+    const { metadata } = element;
+    const container = document.getElementsByClassName(
+      'react-pdf__Page__textContent'
+    )[0];
+    const spans = container?.getElementsByTagName('span');
+    if (!spans) return null;
+    const startContainer = metadata.startContainerIndex;
+    const endContainer = metadata.endContainerIndex;
+    if (metadata.reverseHighlight) {
+      // console.log('test');
+    } else {
+      for (let i = startContainer; i < endContainer; i += 1) {
+        const currContainer = spans[i - 1];
+        highlightElement(currContainer);
+      }
+    }
+  });
 };
 
 export const reDrawHighlight = (metadata: any) => {
@@ -203,3 +224,15 @@ export const reDrawHighlight = (metadata: any) => {
     }
   }
 };
+
+// NEED TO UPDATED WHEN THERE WILL BE MULTIPLE PDFs
+export function pageHighlights(allHighlights: any, currPage: number) {
+  debugger;
+  if (allHighlights) {
+    return allHighlights.filter(
+      (highlight: { metadata: { pageNumber: number } }) =>
+        highlight.metadata.pageNumber === currPage
+    );
+  }
+  return null;
+}

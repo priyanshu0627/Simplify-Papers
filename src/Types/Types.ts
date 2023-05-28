@@ -1,4 +1,5 @@
 export interface QuestionsDataType {
+  highlight: any;
   id: number;
   upVotes: number;
   downVotes: number;

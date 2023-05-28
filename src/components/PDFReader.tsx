@@ -1,6 +1,8 @@
 'use client';
 
+/* eslint-disable no-debugger */
 /* eslint-disable import/no-extraneous-dependencies */
+
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 
@@ -11,7 +13,11 @@ import { addHighlight } from '@/redux/features/Highlights';
 import { addNewQuestion } from '@/redux/features/questionDataSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 
-import highlightContent, { reDrawHighlight } from '../utils/HighlightService';
+import highlightContent, {
+  pageHighlights,
+  reDrawAllHighlight,
+  reDrawHighlight,
+} from '../utils/HighlightService';
 import ControlPanel from './ControlPanel';
 // import FloatingHighlightMenu from './FloatingHighlightingMenu';
 import Loader from './Loader';
@@ -27,16 +33,33 @@ const PDFReader = () => {
   const [pageNumber, setPageNumber] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useAppDispatch();
-  const count = useAppSelector((state) => state.Highlights);
+  const highlightedData = useAppSelector((state) => state.Highlights);
   // const [floatingHighlightMenu, setFloatingHighlightMenu] = useState(false);
 
   const clickTOC = ({ pageNumber: itemPageNumber }: any) => {
     setPageNumber(itemPageNumber);
   };
 
+  const test = () => {
+    // SHOULD PROVIDE PDF ID IN THE SELECTOR TO GET A PARTICULAR PDF
+    debugger;
+    if (highlightedData.allHighlights && highlightedData.allHighlights.length) {
+      const currPageHighlights = pageHighlights(
+        highlightedData.allHighlights,
+        pageNumber
+      );
+      reDrawAllHighlight(currPageHighlights);
+    }
+  };
+
   function onDocumentLoadSuccess({ pageNo }: any) {
     setNumPages(pageNo);
     setIsLoading(false);
+    test();
+  }
+
+  function onPageLoadSuccess() {
+    test();
   }
 
   function onFileChange(event: any) {
@@ -47,11 +70,10 @@ const PDFReader = () => {
 
   const handleMouseUp = (event: any) => {
     debugger;
-    console.log(count);
     if (event.button !== 2) {
-      const metadata = highlightContent();
+      const metadata = highlightContent(pageNumber);
       if (metadata) {
-        metadata.pageNumber = pageNumber;
+        // metadata.pageNumber = pageNumber;
         dispatch(
           addHighlight({
             id: 1,
@@ -82,16 +104,6 @@ const PDFReader = () => {
     }
   };
 
-  const testRedraw = () => {
-    const testData = {
-      startContainerIndex: 6,
-      reverseHighlight: false,
-      endContainerIndex: 8,
-      pageNumber: 1,
-    };
-    reDrawHighlight(testData);
-  };
-
   return (
     <div className="mt-20 flex bg-gray-900">
       <SideBar jumpToOutline={clickTOC} file={file} />
@@ -117,7 +129,7 @@ const PDFReader = () => {
               onLoadSuccess={onDocumentLoadSuccess}
               className="flex justify-center"
             >
-              <Page pageNumber={pageNumber} scale={scale} />
+              <Page pageNumber={pageNumber} scale={scale} onLoadSuccess={onPageLoadSuccess}/>
             </Document>
           </section>
         </section>

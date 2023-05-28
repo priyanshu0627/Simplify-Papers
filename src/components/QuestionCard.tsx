@@ -19,6 +19,9 @@ function QuestionCard(props: any) {
     lastActivityPerson,
     lastActivityTime,
     tags,
+    testRedraw,
+    handleSeeAns,
+    deleteHighlight,
   } = props;
 
   const [bookmark, setBookmark] = useState(false);
@@ -56,8 +59,9 @@ function QuestionCard(props: any) {
     props && (
       <div
         className="m-2 flex rounded border-zinc-600 bg-theme-grey p-2"
-        onClick={props.handleSeeAns}
-        onMouseOver={props.testRedraw}
+        onClick={handleSeeAns}
+        onMouseOver={testRedraw}
+        onMouseLeave={deleteHighlight}
       >
         <section className="flex flex-col	justify-between">
           <div>
