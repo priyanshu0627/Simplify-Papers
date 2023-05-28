@@ -19,7 +19,7 @@ function QuestionCard(props: any) {
     lastActivityPerson,
     lastActivityTime,
     tags,
-    testRedraw,
+    reDrawHighlightOnHover,
     handleSeeAns,
     // deleteHighlight,
     removeDarkerHighlight,
@@ -61,7 +61,7 @@ function QuestionCard(props: any) {
       <div
         className="m-2 flex rounded border-zinc-600 bg-theme-grey p-2"
         onClick={handleSeeAns}
-        onMouseOver={testRedraw}
+        onMouseOver={reDrawHighlightOnHover}
         // onMouseLeave={deleteHighlight}
         onMouseLeave={removeDarkerHighlight}
       >

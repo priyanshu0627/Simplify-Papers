@@ -43,7 +43,6 @@ function PDFSideBar({ onFileChange }: any) {
   };
 
   const reDrawHighlightOnHover = (questionData: QuestionsDataType) => {
-    debugger;
     reDrawHighlight(questionData.highlight);
   };
 
@@ -109,10 +108,12 @@ function PDFSideBar({ onFileChange }: any) {
                   <QuestionCard
                     key={questionData.id}
                     {...questionData}
-                    testRedraw={() => reDrawHighlightOnHover(questionData)}
                     deleteHighlight={() => deleteHighlight(questionData)}
                     removeDarkerHighlight={() => removeDarkerHighlight()}
                     handleSeeAns={() => handleAnswerClick(questionData)}
+                    reDrawHighlightOnHover={() =>
+                      reDrawHighlightOnHover(questionData)
+                    }
                   />
                 ))}
               </section>
