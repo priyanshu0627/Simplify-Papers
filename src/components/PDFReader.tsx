@@ -129,7 +129,11 @@ const PDFReader = () => {
               onLoadSuccess={onDocumentLoadSuccess}
               className="flex justify-center"
             >
-              <Page pageNumber={pageNumber} scale={scale} onLoadSuccess={onPageLoadSuccess}/>
+              <Page
+                pageNumber={pageNumber}
+                scale={scale}
+                onLoadSuccess={onPageLoadSuccess}
+              />
             </Document>
           </section>
         </section>

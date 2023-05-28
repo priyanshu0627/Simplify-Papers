@@ -115,3 +115,8 @@ a:hover {
   top: 0;
   z-index: 999;
 }
+
+.darkerHighlight {
+  background: #45815a!important;
+  color: white!important;
+}

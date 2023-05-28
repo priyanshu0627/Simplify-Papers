@@ -175,8 +175,11 @@ export default function highlightContent(pageNumber: number) {
   }
 }
 
-const highlightElement = (element: any) => {
+const highlightElement = (element: any, darkerHighlight = false) => {
   const highlightNode = document.createElement('mark');
+  if (darkerHighlight) {
+    highlightNode.classList.add('darkerHighlight');
+  }
   if (element && element.textContent) {
     highlightNode.textContent = element.textContent;
     element.textContent = '';
@@ -200,7 +203,7 @@ export const reDrawAllHighlight = (allHighlights: any) => {
     } else {
       for (let i = startContainer; i < endContainer; i += 1) {
         const currContainer = spans[i - 1];
-        highlightElement(currContainer);
+        highlightElement(currContainer, false);
       }
     }
   });
@@ -220,7 +223,11 @@ export const reDrawHighlight = (metadata: any) => {
   } else {
     for (let i = startContainer; i < endContainer; i += 1) {
       const currContainer = spans[i - 1];
-      highlightElement(currContainer);
+      debugger;
+      if (currContainer) {
+        highlightElement(currContainer, true);
+        // currContainer.children[0].classList.add('darkerHighlight');
+      }
     }
   }
 };
