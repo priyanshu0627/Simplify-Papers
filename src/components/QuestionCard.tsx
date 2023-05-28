@@ -21,7 +21,8 @@ function QuestionCard(props: any) {
     tags,
     testRedraw,
     handleSeeAns,
-    deleteHighlight,
+    // deleteHighlight,
+    removeDarkerHighlight,
   } = props;
 
   const [bookmark, setBookmark] = useState(false);
@@ -61,7 +62,8 @@ function QuestionCard(props: any) {
         className="m-2 flex rounded border-zinc-600 bg-theme-grey p-2"
         onClick={handleSeeAns}
         onMouseOver={testRedraw}
-        onMouseLeave={deleteHighlight}
+        // onMouseLeave={deleteHighlight}
+        onMouseLeave={removeDarkerHighlight}
       >
         <section className="flex flex-col	justify-between">
           <div>

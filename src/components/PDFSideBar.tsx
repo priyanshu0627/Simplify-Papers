@@ -51,6 +51,18 @@ function PDFSideBar({ onFileChange }: any) {
     console.log(questionData);
   };
 
+  const removeDarkerHighlight = () => {
+    try {
+      Object.values(document.getElementsByClassName('darkerHighlight')).forEach(
+        (element) => {
+          element.classList.toggle('darkerHighlight');
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {}, []);
 
   const scrollToBottom = () => {
@@ -99,6 +111,7 @@ function PDFSideBar({ onFileChange }: any) {
                     {...questionData}
                     testRedraw={() => reDrawHighlightOnHover(questionData)}
                     deleteHighlight={() => deleteHighlight(questionData)}
+                    removeDarkerHighlight={() => removeDarkerHighlight()}
                     handleSeeAns={() => handleAnswerClick(questionData)}
                   />
                 ))}
