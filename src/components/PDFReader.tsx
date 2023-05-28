@@ -11,6 +11,7 @@ import { Document, Page, pdfjs } from 'react-pdf';
 
 import { addHighlight } from '@/redux/features/Highlights';
 import { addNewQuestion } from '@/redux/features/questionDataSlice';
+import { updateHighlightStatus } from '@/redux/features/StatusHighlight';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 
 import highlightContent, {
@@ -81,6 +82,7 @@ const PDFReader = () => {
             currHighlight: metadata,
           })
         );
+        dispatch(updateHighlightStatus({ rangeId: metadata.rangeId }));
         dispatch(
           addNewQuestion({
             newQuestionData: {

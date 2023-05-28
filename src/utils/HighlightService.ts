@@ -1,3 +1,4 @@
+/* eslint-disable no-bitwise */
 /* eslint-disable no-debugger */
 // eslint-disable-next-line import/no-extraneous-dependencies
 import $ from 'jquery';
@@ -132,7 +133,20 @@ export function onHighlightAction(
 //   console.table(metaData);
 // }
 
-export default function highlightContent(pageNumber: number) {
+const createRangeId = () => {
+  let timestamp = new Date().getTime();
+  const uniqueId = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
+    /[xy]/g,
+    function (char) {
+      const random = (timestamp + Math.random() * 16) % 16 | 0;
+      timestamp = Math.floor(timestamp / 16);
+      return (char === 'x' ? random : (random & 0x3) | 0x8).toString(16);
+    }
+  );
+  return uniqueId;
+};
+
+export default function highlightContent(pageNumber: number = 0) {
   try {
     const metaData: any = {};
     let start = false;
@@ -175,6 +189,7 @@ export default function highlightContent(pageNumber: number) {
     });
     console.table(metaData);
     metaData.pageNumber = pageNumber;
+    metaData.rangeId = createRangeId();
     return metaData;
   } catch (error) {
     throw new Error('Function highlight content not implemented!');
