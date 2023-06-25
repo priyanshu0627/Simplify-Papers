@@ -126,7 +126,10 @@ function PDFSideBar({ onFileChange }: any) {
           case SidebarSection.askQuestion:
             return (
               <section>
-                <AskQuestionCard />
+                <AskQuestionCard
+                  setSidebarSection={setSidebarSection}
+                  allQuestionBar={SidebarSection.allQuestions}
+                />
               </section>
             );
           case SidebarSection.seeAnswer:

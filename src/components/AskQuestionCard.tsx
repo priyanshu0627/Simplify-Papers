@@ -9,7 +9,7 @@ import React from 'react';
 import { updateQuestion } from '@/redux/features/questionDataSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 
-function AskQuestionCard() {
+function AskQuestionCard(props: any) {
   const [channelName, setChannelName] = React.useState('');
   const [questionTitle, setQuestionTitle] = React.useState('');
   const [questionComment, setQuestionComment] = React.useState('');
@@ -26,17 +26,25 @@ function AskQuestionCard() {
     setQuestionComment(event.target.value as string);
   };
 
+  const validateAskQuestion = () => {
+    return 1;
+  };
+
   const submitQuestion = () => {
+    // SHIFT THIS TO VALIDATE FUNCTION AS WELL
     if (!rangeStatus.rangeId) {
       return;
     }
-    const formData = {
-      questionTitle,
-      questionComment,
-      channelName,
-      rangeStatus,
-    };
-    dispatch(updateQuestion(formData));
+    if (validateAskQuestion()) {
+      const formData = {
+        questionTitle,
+        questionComment,
+        channelName,
+        rangeStatus,
+      };
+      dispatch(updateQuestion(formData));
+      props.setSidebarSection(props.allQuestionBar);
+    }
   };
 
   return (
