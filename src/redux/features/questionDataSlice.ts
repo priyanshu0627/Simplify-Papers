@@ -1,8 +1,10 @@
-import type { PayloadAction } from '@reduxjs/toolkit';
+/* eslint-disable no-console */
+// import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 
 type QuestionDataState = {
   id: number;
+  rangeId: number;
   upVotes: number;
   downVotes: number;
   liked: number;
@@ -10,6 +12,8 @@ type QuestionDataState = {
   flag: number;
   views: number;
   question: string;
+  comment: string;
+  channel: string;
   askedBy: string;
   lastActivityTime: string;
   lastActivityPerson: string;
@@ -32,11 +36,27 @@ export const questionData = createSlice({
       // eslint-disable-next-line no-param-reassign
       console.log(state, action);
     },
+    updateQuestion: (state, action) => {
+      const rangeID = action.payload.rangeStatus.rangeId;
+      const updatedQuestion = state.map((question) => {
+        if (question.highlight.rangeId === rangeID) {
+          return {
+            ...question,
+            question: action.payload.questionTitle,
+            comment: action.payload.questionComment,
+            channel: action.payload.channelName,
+            askedBy: 'Priyanshu',
+          };
+        }
+        return question;
+      });
+      return updatedQuestion;
+    },
     test: () => {},
   },
 });
 
-export const { addNewQuestion, reset, deleteQuestion, test } =
+export const { addNewQuestion, reset, deleteQuestion, test, updateQuestion } =
   questionData.actions;
 
 export default questionData.reducer;

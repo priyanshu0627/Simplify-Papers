@@ -6,10 +6,15 @@ import type { SelectChangeEvent } from '@mui/material/Select';
 import Select from '@mui/material/Select';
 import React from 'react';
 
+import { updateQuestion } from '@/redux/features/questionDataSlice';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+
 function AskQuestionCard() {
   const [channelName, setChannelName] = React.useState('');
   const [questionTitle, setQuestionTitle] = React.useState('');
   const [questionComment, setQuestionComment] = React.useState('');
+  const rangeStatus = useAppSelector((state) => state.StatusHighlight);
+  const dispatch = useAppDispatch();
 
   const handleChange = (event: SelectChangeEvent) => {
     setChannelName(event.target.value as string);
@@ -19,6 +24,19 @@ function AskQuestionCard() {
   };
   const handleComment = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setQuestionComment(event.target.value as string);
+  };
+
+  const submitQuestion = () => {
+    if (!rangeStatus.rangeId) {
+      return;
+    }
+    const formData = {
+      questionTitle,
+      questionComment,
+      channelName,
+      rangeStatus,
+    };
+    dispatch(updateQuestion(formData));
   };
 
   return (
@@ -78,7 +96,11 @@ function AskQuestionCard() {
               Use MarkDown to enrich this comment.
             </div>
             <div className="mt-4 flex flex-row-reverse">
-              <Button variant="contained" className="bg-blue-700">
+              <Button
+                variant="contained"
+                className="bg-blue-700"
+                onClick={submitQuestion}
+              >
                 ADD QUESTION
               </Button>
             </div>

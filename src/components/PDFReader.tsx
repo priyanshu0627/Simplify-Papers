@@ -86,7 +86,8 @@ const PDFReader = () => {
         dispatch(
           addNewQuestion({
             newQuestionData: {
-              id: 999,
+              id: metadata.rangeID,
+              rangeId: metadata.rangeID,
               upVotes: 999,
               downVotes: 999,
               liked: 999,

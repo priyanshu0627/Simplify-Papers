@@ -5,7 +5,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 // import { addNewQuestion } from '@/redux/features/questionDataSlice';
-import { useAppDispatch } from '@/redux/hooks';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { reDrawHighlight } from '@/utils/HighlightService';
 
 import type { QuestionsDataType } from '../Types/Types';
@@ -25,7 +25,7 @@ function PDFSideBar({ onFileChange }: any) {
     SidebarSection.allQuestions
   );
   const allQuestions = useSelector((state: any) => state.questionDataSlice);
-  // const dispatch = useAppDispatch();
+  const rangeStatus = useAppSelector((state) => state.StatusHighlight);
   const questionComponentRef = useRef(null);
 
   const handleAskQuestionButton = () => {
@@ -62,7 +62,12 @@ function PDFSideBar({ onFileChange }: any) {
     }
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    debugger;
+    if (rangeStatus.rangeSelected) {
+      setSidebarSection(SidebarSection.askQuestion);
+    }
+  }, [rangeStatus]);
 
   const scrollToBottom = () => {
     // questionComponentRef.current.scrollIntoView({ behavior: 'smooth' });
