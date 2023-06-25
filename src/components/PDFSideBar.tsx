@@ -20,7 +20,7 @@ const SidebarSection = {
   seeAnswer: 'seeAnswer',
 };
 
-function PDFSideBar({ onFileChange }: any) {
+function PDFSideBar({ onFileChange, pageNumber }: any) {
   const [sidebarSection, setSidebarSection] = useState(
     SidebarSection.allQuestions
   );
@@ -43,6 +43,10 @@ function PDFSideBar({ onFileChange }: any) {
   };
 
   const reDrawHighlightOnHover = (questionData: QuestionsDataType) => {
+    if (pageNumber !== questionData.highlight.pageNumber) {
+      alert('Not the same page!');
+      return;
+    }
     reDrawHighlight(questionData.highlight);
   };
 

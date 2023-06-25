@@ -141,7 +141,7 @@ const PDFReader = () => {
           </section>
         </section>
         <section className="basis-2/5">
-          <PDFSideBar onFileChange={onFileChange} />
+          <PDFSideBar onFileChange={onFileChange} pageNumber={pageNumber} />
         </section>
       </div>
     </div>
