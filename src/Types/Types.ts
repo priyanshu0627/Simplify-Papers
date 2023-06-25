@@ -11,4 +11,9 @@ export interface QuestionsDataType {
   lastActivityPerson: string;
   lastActivityTime: string;
   tags: string[];
+  rangeId: number;
+  liked: number;
+  views: number;
+  answer: string;
+  channel: string;
 }

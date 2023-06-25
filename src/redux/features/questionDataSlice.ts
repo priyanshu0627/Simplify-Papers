@@ -13,6 +13,7 @@ type QuestionDataState = {
   views: number;
   question: string;
   comment: string;
+  answer: string;
   channel: string;
   askedBy: string;
   lastActivityTime: string;
