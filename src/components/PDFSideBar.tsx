@@ -1,4 +1,3 @@
-/* eslint-disable no-debugger */
 /* eslint-disable no-console */
 import { Button, OutlinedInput } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
@@ -24,6 +23,7 @@ function PDFSideBar({ onFileChange, pageNumber }: any) {
   const [sidebarSection, setSidebarSection] = useState(
     SidebarSection.allQuestions
   );
+  const [currQuestionId, setCurrQuestionId] = React.useState(null);
   const allQuestions = useSelector((state: any) => state.questionDataSlice);
   const rangeStatus = useAppSelector((state) => state.StatusHighlight);
   const questionComponentRef = useRef(null);
@@ -40,6 +40,7 @@ function PDFSideBar({ onFileChange, pageNumber }: any) {
   const handleAnswerClick = (questionData: QuestionsDataType) => {
     console.log(questionData);
     setSidebarSection(SidebarSection.seeAnswer);
+    setCurrQuestionId(questionData.highlight.rangeId);
   };
 
   const reDrawHighlightOnHover = (questionData: QuestionsDataType) => {
@@ -67,7 +68,6 @@ function PDFSideBar({ onFileChange, pageNumber }: any) {
   };
 
   useEffect(() => {
-    debugger;
     if (rangeStatus.rangeSelected) {
       setSidebarSection(SidebarSection.askQuestion);
     }
@@ -139,7 +139,7 @@ function PDFSideBar({ onFileChange, pageNumber }: any) {
           case SidebarSection.seeAnswer:
             return (
               <section className="overflow-auto">
-                <AnswerCardSidebar />
+                <AnswerCardSidebar currQuestionId={currQuestionId} />
               </section>
             );
           default:

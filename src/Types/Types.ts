@@ -6,6 +6,7 @@ export interface QuestionsDataType {
   accepted: boolean;
   flag: number;
   question: string;
+  comment: string;
   askedBy: string;
   lastActivityPerson: string;
   lastActivityTime: string;

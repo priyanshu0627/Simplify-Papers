@@ -8,6 +8,10 @@ import ShareIcon from '@mui/icons-material/Share';
 import SpellcheckIcon from '@mui/icons-material/Spellcheck';
 import { Avatar, Button, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+
+import type { QuestionsDataType } from '@/Types/Types';
+import { GlobalLabels } from '@/utils/globalLabels';
 
 const data: any = {
   id: 1,
@@ -24,13 +28,17 @@ const data: any = {
   tags: ['React', 'next'],
 };
 
-function AnswerCardSidebar() {
+function AnswerCardSidebar({ currQuestionId }: any) {
+  const [question, setQuestion] = useState(null);
+  const [comment, setComment] = useState(null);
   const [bookmark, setBookmark] = useState(false);
   const [upVote, setUpVote] = useState(data.upVotes);
   const [downVote, setDownVote] = useState(data.downVotes);
   const [like, hitLike] = useState(false);
   const [userAnswer, setUserAnswer] = useState('');
   const [flag, setFlag] = useState(data.flag);
+
+  const allQuestions = useSelector((state: any) => state.questionDataSlice);
 
   const handleShareProject = () => {
     setBookmark(!bookmark);
@@ -60,6 +68,14 @@ function AnswerCardSidebar() {
   useEffect(() => {
     setUserAnswer('');
     setFlag(data.flag);
+    const currQuestionData = allQuestions.filter(
+      (element: QuestionsDataType) =>
+        element.highlight.rangeId === currQuestionId
+    );
+    if (currQuestionData.length > 0) {
+      setQuestion(currQuestionData[0].question);
+      setComment(currQuestionData[0].comment);
+    }
   }, []);
 
   return (
@@ -70,18 +86,8 @@ function AnswerCardSidebar() {
 
       <section className="my-4 flex flex-row justify-between border-b-2 border-solid border-theme-green pb-4">
         <div className="flex w-[88%] flex-col">
-          <div className="my-1 text-lg">What is Lorem Ipsum?</div>
-          <div className="text-xs text-gray-700">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry standard dummy text
-            since the 1500s, when an unknown printer took a galley of type and
-            scrambled it to make a type specimen book. It has survived not only
-            only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularized in the 1960s
-            with the release of Letraset sheets containing Lorem Ipsum passages,
-            and more recently with desktop publishing software like Aldus
-            PageMaker including versions of Lorem Ipsum.
-          </div>
+          <div className="my-1 text-lg">{question}</div>
+          <div className="text-xs text-gray-700">{comment}</div>
         </div>
         <div className="ml-3 flex	w-[12%] flex-col justify-start">
           <div className="flex items-center	justify-between">
@@ -200,7 +206,7 @@ function AnswerCardSidebar() {
           id="answer"
           label="Answer"
           maxRows={4}
-          placeholder="Type Your Ans Here..."
+          placeholder={GlobalLabels.typeYourAnsLabel}
           value={userAnswer}
           sx={{ width: '100%' }}
           variant="filled"
