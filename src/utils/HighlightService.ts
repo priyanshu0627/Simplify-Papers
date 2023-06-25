@@ -1,5 +1,4 @@
 /* eslint-disable no-bitwise */
-/* eslint-disable no-debugger */
 // eslint-disable-next-line import/no-extraneous-dependencies
 import $ from 'jquery';
 import { v4 as uuidv4 } from 'uuid';
@@ -209,7 +208,6 @@ const highlightElement = (element: any, darkerHighlight = false) => {
 };
 
 export const reDrawAllHighlight = (allHighlights: any) => {
-  debugger;
   allHighlights.forEach((element: any) => {
     const { metadata } = element;
     const container = document.getElementsByClassName(
@@ -244,7 +242,6 @@ export const reDrawHighlight = (metadata: any) => {
   } else {
     for (let i = startContainer; i < endContainer; i += 1) {
       const currContainer = spans[i - 1];
-      debugger;
       if (currContainer) {
         highlightElement(currContainer, true);
         // currContainer.children[0].classList.add('darkerHighlight');
@@ -255,7 +252,6 @@ export const reDrawHighlight = (metadata: any) => {
 
 // NEED TO UPDATED WHEN THERE WILL BE MULTIPLE PDFs
 export function pageHighlights(allHighlights: any, currPage: number) {
-  debugger;
   if (allHighlights) {
     return allHighlights.filter(
       (highlight: { metadata: { pageNumber: number } }) =>

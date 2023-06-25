@@ -1,6 +1,5 @@
 'use client';
 
-/* eslint-disable no-debugger */
 /* eslint-disable import/no-extraneous-dependencies */
 
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
@@ -43,7 +42,6 @@ const PDFReader = () => {
 
   const test = () => {
     // SHOULD PROVIDE PDF ID IN THE SELECTOR TO GET A PARTICULAR PDF
-    debugger;
     if (highlightedData.allHighlights && highlightedData.allHighlights.length) {
       const currPageHighlights = pageHighlights(
         highlightedData.allHighlights,
@@ -70,7 +68,6 @@ const PDFReader = () => {
   useEffect(() => {}, []);
 
   const handleMouseUp = (event: any) => {
-    debugger;
     if (event.button !== 2) {
       const metadata = highlightContent(pageNumber);
       if (metadata) {
