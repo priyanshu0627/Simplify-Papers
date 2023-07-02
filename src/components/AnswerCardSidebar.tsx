@@ -10,8 +10,12 @@ import { Avatar, Button, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import { addNewAnswer } from '@/redux/features/answerDataSlice';
+import { useAppDispatch } from '@/redux/hooks';
 import type { QuestionsDataType } from '@/Types/Types';
 import { GlobalLabels } from '@/utils/globalLabels';
+
+import AnswerCard from './AnswerCard';
 
 const data: any = {
   id: 1,
@@ -36,7 +40,9 @@ function AnswerCardSidebar({ currQuestionId }: any) {
   const [downVote, setDownVote] = useState(data.downVotes);
   const [like, hitLike] = useState(false);
   const [userAnswer, setUserAnswer] = useState('');
+  const [userAnswerHeading, setUserAnswerHeading] = useState('');
   const [flag, setFlag] = useState(data.flag);
+  const dispatch = useAppDispatch();
 
   const allQuestions = useSelector((state: any) => state.questionDataSlice);
 
@@ -63,7 +69,37 @@ function AnswerCardSidebar({ currQuestionId }: any) {
   };
 
   const handleCheckAnswer = () => {};
-  const handleSubmitAns = () => {};
+
+  const handleUserAnswer = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUserAnswer(event.target.value as string);
+  };
+
+  const handleUserAnswerHeading = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setUserAnswerHeading(event.target.value as string);
+  };
+
+  const validateAnswer = () => {
+    return 1;
+  };
+
+  const handleSubmitAns = () => {
+    if (validateAnswer()) {
+      dispatch(
+        addNewAnswer({
+          questionId: currQuestionId,
+          newAnswer: {
+            heading: userAnswerHeading,
+            answer: userAnswer,
+          },
+        })
+      );
+    }
+    setUserAnswerHeading('');
+    setUserAnswer('');
+    // hitLike(!like);
+  };
 
   useEffect(() => {
     setUserAnswer('');
@@ -202,12 +238,28 @@ function AnswerCardSidebar({ currQuestionId }: any) {
 
       <section className="my-4 flex flex-col justify-between border-b-2 border-solid border-theme-green pb-4 text-sm">
         <TextField
+          className="my-2"
+          required
+          id="answerHeading"
+          label="Answer Heading"
+          maxRows={4}
+          placeholder={GlobalLabels.typeYourAnsHeading}
+          value={userAnswerHeading}
+          onChange={handleUserAnswerHeading}
+          sx={{ width: '100%' }}
+          variant="filled"
+          color="success"
+          focused
+        />
+        <TextField
+          className="my-2"
           required
           id="answer"
           label="Answer"
-          maxRows={4}
+          maxRows={10}
           placeholder={GlobalLabels.typeYourAnsLabel}
           value={userAnswer}
+          onChange={handleUserAnswer}
           sx={{ width: '100%' }}
           variant="filled"
           color="success"
@@ -219,83 +271,13 @@ function AnswerCardSidebar({ currQuestionId }: any) {
       </section>
 
       <section className="my-4 flex flex-col justify-between pb-4 text-sm">
-        <div>2 Answers</div>
-        <div className="my-2 flex flex-row rounded-lg border-2 border-solid border-theme-green bg-theme-lightGreen py-2">
-          <div className="mr-3 flex w-[15%] flex-col justify-start">
-            <div className="flex items-center	justify-around">
-              <ArrowDropUpIcon
-                fontSize="large"
-                className="text-theme-green"
-                onClick={handleUpVote}
-              />
-              <div className="text-xs text-gray-700">{upVote}</div>
-            </div>
-            <div className="flex items-center	justify-around	">
-              <ArrowDropDownIcon
-                fontSize="large"
-                className="text-theme-green"
-                onClick={handleDownVote}
-              />
-              <div className="text-xs text-gray-700">{downVote}</div>
-            </div>
-            <div className="ml-2 flex	items-center justify-start">
-              <ShareIcon className="text-theme-green" />
-            </div>
-          </div>
-          <div className="flex w-[85%] flex-col">
-            <div className="text-lg">Ans Heading</div>
-            <div className="text-xs text-gray-700">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book. It has
-              survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially unchanged. It was
-              popularised in the 1960s with the release of Letraset sheets
-              containing Lorem Ipsum passages, and more recently with desktop
-              publishing software like Aldus PageMaker including versions of
-              Lorem Ipsum.
-            </div>
-          </div>
-        </div>
-        <div className="my-2 flex flex-row rounded-lg border-2 border-solid border-theme-green bg-theme-lightGreen py-2">
-          <div className="mr-3 flex w-[15%] flex-col justify-start">
-            <div className="flex items-center	justify-around">
-              <ArrowDropUpIcon
-                fontSize="large"
-                className="text-theme-green"
-                onClick={handleUpVote}
-              />
-              <div className="text-xs text-gray-700">{upVote}</div>
-            </div>
-            <div className="flex items-center	justify-around	">
-              <ArrowDropDownIcon
-                fontSize="large"
-                className="text-theme-green"
-                onClick={handleDownVote}
-              />
-              <div className="text-xs text-gray-700">{downVote}</div>
-            </div>
-            <div className="ml-2 flex	items-center justify-start">
-              <ShareIcon className="text-theme-green" />
-            </div>
-          </div>
-          <div className="flex w-[85%] flex-col">
-            <div className="text-lg">Ans Heading</div>
-            <div className="text-xs text-gray-700">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book. It has
-              survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially unchanged. It was
-              popularised in the 1960s with the release of Letraset sheets
-              containing Lorem Ipsum passages, and more recently with desktop
-              publishing software like Aldus PageMaker including versions of
-              Lorem Ipsum.
-            </div>
-          </div>
-        </div>
+        <AnswerCard
+          handleUpVote={handleUpVote}
+          handleDownVote={handleDownVote}
+          upVote={upVote}
+          downVote={downVote}
+          currQuestionId={currQuestionId}
+        />
       </section>
     </div>
   );
