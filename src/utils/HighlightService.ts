@@ -157,8 +157,24 @@ export default function highlightContent(pageNumber: number = 0) {
       return;
     }
 
+    if (
+      !(
+        document &&
+        document.getElementsByClassName(
+          'react-pdf__Page__textContent textLayer'
+        )[0] &&
+        document
+          .getElementsByClassName('react-pdf__Page__textContent textLayer')[0]
+          .getElementsByTagName('span')
+      )
+    ) {
+      return;
+    }
+
     Object.values(
-      $('.react-pdf__Page__textContent.textLayer')[0].children
+      document
+        .getElementsByClassName('react-pdf__Page__textContent textLayer')[0]
+        .getElementsByTagName('span')
     ).forEach((element: any, index: any) => {
       if (element === range?.startContainer?.parentElement) {
         metaData.startContainerIndex = index;
@@ -221,7 +237,7 @@ export const reDrawAllHighlight = (allHighlights: any) => {
       // console.log('test');
     } else {
       for (let i = startContainer; i < endContainer; i += 1) {
-        const currContainer = spans[i - 1];
+        const currContainer = spans[i];
         highlightElement(currContainer, false);
       }
     }
@@ -241,7 +257,7 @@ export const reDrawHighlight = (metadata: any) => {
     // console.log('test');
   } else {
     for (let i = startContainer; i < endContainer; i += 1) {
-      const currContainer = spans[i - 1];
+      const currContainer = spans[i];
       if (currContainer) {
         highlightElement(currContainer, true);
         // currContainer.children[0].classList.add('darkerHighlight');
