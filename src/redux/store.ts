@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 
+import answerDataSlice from './features/answerDataSlice';
 import counterReducer from './features/counterSlice';
 import Highlights from './features/Highlights';
 import questionDataSlice from './features/questionDataSlice';
@@ -10,6 +11,7 @@ export const store = configureStore({
     counterReducer,
     Highlights,
     questionDataSlice,
+    answerDataSlice,
     StatusHighlight,
   },
 });
