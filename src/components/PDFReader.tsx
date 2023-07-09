@@ -16,7 +16,7 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import highlightContent, {
   pageHighlights,
   reDrawAllHighlight,
-  reDrawHighlight,
+  // reDrawHighlight,
 } from '../utils/HighlightService';
 import ControlPanel from './ControlPanel';
 // import FloatingHighlightMenu from './FloatingHighlightingMenu';
@@ -85,12 +85,12 @@ const PDFReader = () => {
             newQuestionData: {
               id: metadata.rangeID,
               rangeId: metadata.rangeID,
-              upVotes: 999,
-              downVotes: 999,
-              liked: 999,
+              upVotes: 0,
+              downVotes: 0,
+              liked: 0,
               accepted: true,
-              flag: 999,
-              views: 999,
+              flag: 0,
+              views: 0,
               question: 'redux',
               askedBy: 'redux',
               lastActivityTime: 'just now',

@@ -46,7 +46,8 @@ export const questionData = createSlice({
             question: action.payload.questionTitle,
             comment: action.payload.questionComment,
             channel: action.payload.channelName,
-            askedBy: 'Priyanshu',
+            // labels: action.payload.questionLabels,
+            askedBy: 'USER',
           };
         }
         return question;

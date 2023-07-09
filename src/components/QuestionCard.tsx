@@ -60,7 +60,6 @@ function QuestionCard(props: any) {
     props && (
       <div
         className="m-2 flex rounded border-zinc-600 bg-theme-grey p-2"
-        onClick={handleSeeAns}
         onMouseOver={reDrawHighlightOnHover}
         // onMouseLeave={deleteHighlight}
         onMouseLeave={removeDarkerHighlight}
@@ -110,7 +109,9 @@ function QuestionCard(props: any) {
           </div>
         </section>
         <section className="flex-auto">
-          <div className="mb-2	text-lg">{question}</div>
+          <div className="mb-2	text-lg" onClick={handleSeeAns}>
+            {question}
+          </div>
           <div className="flex items-center">
             <div className="text-xs text-gray-700">asked by</div>
             <Button
