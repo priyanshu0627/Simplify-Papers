@@ -9,6 +9,8 @@ import React from 'react';
 import { updateQuestion } from '@/redux/features/questionDataSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 
+import MultipleInputField from './MultipleInputField';
+
 function AskQuestionCard(props: any) {
   const [channelName, setChannelName] = React.useState('');
   const [questionTitle, setQuestionTitle] = React.useState('');
@@ -100,6 +102,7 @@ function AskQuestionCard(props: any) {
               onChange={handleComment}
               className="mt-4"
             />
+            <MultipleInputField />
             <div className="mt-4 text-sm">
               Use MarkDown to enrich this comment.
             </div>
