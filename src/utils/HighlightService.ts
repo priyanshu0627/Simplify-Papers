@@ -1,6 +1,6 @@
 /* eslint-disable no-bitwise */
 // eslint-disable-next-line import/no-extraneous-dependencies
-import $ from 'jquery';
+// import $ from 'jquery';
 import { v4 as uuidv4 } from 'uuid';
 // @ts-ignore
 import { fromRange } from 'xpath-range';
@@ -145,79 +145,59 @@ const createRangeId = () => {
   return uniqueId;
 };
 
-export default function highlightContent(pageNumber: number = 0) {
-  try {
-    const metaData: any = {};
-    let start = false;
-    let end = false;
-    const range = document?.getSelection()?.getRangeAt(0);
+function validateWrongHighlight(range: any) {
+  if (range && range.collapsed) {
+    range.collapse();
+    return 1;
+  }
 
-    if (range && range.collapsed) {
-      range.collapse();
-      return;
-    }
-
-    if (
-      !(
-        document &&
-        document.getElementsByClassName(
-          'react-pdf__Page__textContent textLayer'
-        )[0] &&
-        document
-          .getElementsByClassName('react-pdf__Page__textContent textLayer')[0]
-          .getElementsByTagName('span')
-      )
-    ) {
-      return;
-    }
-
-    Object.values(
+  if (
+    !(
+      document &&
+      document.getElementsByClassName(
+        'react-pdf__Page__textContent textLayer'
+      )[0] &&
       document
         .getElementsByClassName('react-pdf__Page__textContent textLayer')[0]
         .getElementsByTagName('span')
-    ).forEach((element: any, index: any) => {
-      if (element === range?.startContainer?.parentElement) {
-        metaData.startContainerIndex = index;
-        if (!start) {
-          start = true;
-          metaData.reverseHighlight = false;
-        } else if (start && !end) {
-          end = true;
-        }
-      }
-      if (element === range?.endContainer?.parentElement) {
-        metaData.endContainerIndex = index;
-        if (!start) {
-          start = true;
-          metaData.reverseHighlight = true;
-        } else if (start && !end) {
-          end = true;
-        }
-      }
-      // middle mei hai
-      if (start && !end) {
-        const highlightNode = document.createElement('mark');
-        highlightNode.textContent = element.textContent;
-        element.textContent = '';
-        element.appendChild(highlightNode);
-      }
-    });
-    console.table(metaData);
-    metaData.pageNumber = pageNumber;
-    metaData.rangeId = createRangeId();
-    return metaData;
-  } catch (error) {
-    throw new Error('Function highlight content not implemented!');
+    )
+  ) {
+    return 1;
   }
+  return 0;
 }
 
-const highlightElement = (element: any, darkerHighlight = false) => {
+const highlightElement = (
+  element: any,
+  position: string,
+  offSet: number | null,
+  darkerHighlight = false
+) => {
+  if (!(element && element.textContent)) {
+    return;
+  }
   const highlightNode = document.createElement('mark');
+  highlightNode.textContent = element.textContent;
+  const text = element.textContent;
   if (darkerHighlight) {
     highlightNode.classList.add('darkerHighlight');
   }
-  if (element && element.textContent) {
-    highlightNode.textContent = element.textContent;
+  // debugger;
+  if (position === 'start') {
+    const unchangedText = text.slice(0, offSet);
+    const textToHighlight = text.slice(offSet);
+    highlightNode.textContent = textToHighlight;
+    element.textContent = unchangedText;
+    element.appendChild(highlightNode);
+  } else if (position === 'end') {
+    const unchangedText = text.slice(offSet);
+    const textToHighlight = text.slice(0, offSet);
+    highlightNode.textContent = textToHighlight;
+    element.textContent = unchangedText;
+    // element.appendChild(highlightNode);
+    element.insertBefore(highlightNode, element.firstChild);
+
+  } else if (position === 'middle') {
     element.textContent = '';
     element.appendChild(highlightNode);
   }
@@ -236,10 +216,22 @@ export const reDrawAllHighlight = (allHighlights: any) => {
     if (metadata.reverseHighlight) {
       // console.log('test');
     } else {
-      for (let i = startContainer; i < endContainer; i += 1) {
+      highlightElement(
+        spans[startContainer],
+        'start',
+        metadata.startContainerOffSet,
+        false
+      );
+      for (let i = startContainer + 1; i < endContainer - 1; i += 1) {
         const currContainer = spans[i];
-        highlightElement(currContainer, false);
+        highlightElement(currContainer, 'middle', null, false);
       }
+      highlightElement(
+        spans[endContainer],
+        'end',
+        metadata.endContainerOffSet,
+        false
+      );
     }
   });
 };
@@ -256,15 +248,89 @@ export const reDrawHighlight = (metadata: any) => {
   if (metadata.reverseHighlight) {
     // console.log('test');
   } else {
+    highlightElement(
+      spans[startContainer],
+      'start',
+      metadata.startContainerOffSet,
+      true
+    );
     for (let i = startContainer; i < endContainer; i += 1) {
       const currContainer = spans[i];
       if (currContainer) {
-        highlightElement(currContainer, true);
+        highlightElement(currContainer, 'middle', null, true);
         // currContainer.children[0].classList.add('darkerHighlight');
       }
     }
+    highlightElement(
+      spans[endContainer],
+      'end',
+      metadata.endContainerOffSet,
+      true
+    );
   }
 };
+
+export default function highlightContent(pageNumber: number = 0) {
+  try {
+    const metaData: any = {};
+    let start = false;
+    let end = false;
+    const range = document?.getSelection()?.getRangeAt(0);
+
+    if (validateWrongHighlight(range)) {
+      return;
+    }
+
+    Object.values(
+      document
+        .getElementsByClassName('react-pdf__Page__textContent textLayer')[0]
+        .getElementsByTagName('span')
+    ).forEach((element: any, index: any) => {
+      if (element === range?.endContainer?.parentElement) {
+        debugger;
+        metaData.endContainerIndex = index;
+        metaData.endContainerOffSet = range?.endOffset;
+        if (!start) {
+          start = true;
+          metaData.reverseHighlight = true;
+        } else if (start && !end) {
+          highlightElement(element, 'end', metaData.endContainerOffSet, false);
+          end = true;
+        }
+      }
+      // middle mei hai
+      if (start && !end) {
+        // const highlightNode = document.createElement('mark');
+        // highlightNode.textContent = element.textContent;
+        // element.textContent = '';
+        // element.appendChild(highlightNode);
+        highlightElement(element, 'middle', null, false);
+      }
+      if (element === range?.startContainer?.parentElement) {
+        metaData.startContainerIndex = index;
+        metaData.startContainerOffSet = range?.startOffset;
+        if (!start) {
+          start = true;
+          metaData.reverseHighlight = false;
+          highlightElement(
+            element,
+            'start',
+            metaData.startContainerOffSet,
+            false
+          );
+        } else if (start && !end) {
+          end = true;
+        }
+      }
+    });
+    // console.table(metaData);
+    metaData.pageNumber = pageNumber;
+    metaData.rangeId = createRangeId();
+    return metaData;
+  } catch (error) {
+    throw new Error('Function highlight content not implemented!');
+  }
+}
 
 // NEED TO UPDATED WHEN THERE WILL BE MULTIPLE PDFs
 export function pageHighlights(allHighlights: any, currPage: number) {
