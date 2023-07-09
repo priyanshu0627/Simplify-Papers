@@ -254,7 +254,7 @@ export const reDrawHighlight = (metadata: any) => {
       metadata.startContainerOffSet,
       true
     );
-    for (let i = startContainer; i < endContainer; i += 1) {
+    for (let i = startContainer + 1; i < endContainer; i += 1) {
       const currContainer = spans[i];
       if (currContainer) {
         highlightElement(currContainer, 'middle', null, true);
