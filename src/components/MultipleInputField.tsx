@@ -1,4 +1,5 @@
-import type { AutocompleteGetTagProps } from '@mui/base/useAutocomplete';
+import type * as useAutocomplete_1 from '@mui/base/useAutocomplete';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import useAutocomplete from '@mui/base/useAutocomplete';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
@@ -6,7 +7,11 @@ import { autocompleteClasses } from '@mui/material/Autocomplete';
 import { styled } from '@mui/material/styles';
 import * as React from 'react';
 
-const top100Films = [
+interface TagTypeOption {
+  title: string;
+}
+
+const Tags = [
   { title: 'React' },
   { title: 'JS' },
   { title: 'Node' },
@@ -73,7 +78,8 @@ const InputWrapper = styled('div')(
 `
 );
 
-interface TagProps extends ReturnType<AutocompleteGetTagProps> {
+interface TagProps
+  extends ReturnType<useAutocomplete_1.AutocompleteGetTagProps> {
   label: string;
 }
 
@@ -170,10 +176,10 @@ const Listbox = styled('ul')(
 `
 );
 
-export default function MultipleInputField() {
+export default function MultipleInputField({ setQuestionLabels }: any) {
   const {
     getRootProps,
-    getInputLabelProps,
+    // getInputLabelProps,
     getInputProps,
     getTagProps,
     getListboxProps,
@@ -182,13 +188,18 @@ export default function MultipleInputField() {
     value,
     focused,
     setAnchorEl,
+    options,
   } = useAutocomplete({
     id: 'customized-hook-demo',
-    defaultValue: [top100Films[1]],
+    // defaultValue: [Tags[1]],
     multiple: true,
-    options: top100Films,
-    getOptionLabel: (option) => option.title,
+    options: Tags,
+    getOptionLabel: (option: { title: any }) => option.title,
   });
+
+  React.useEffect(() => {
+    setQuestionLabels(options);
+  }, [options]);
 
   return (
     <Root>
@@ -199,7 +210,7 @@ export default function MultipleInputField() {
           className={focused ? 'focused' : ''}
           placeholder="Add Labels"
         >
-          {value.map((option: FilmOptionType, index: number) => (
+          {value.map((option: TagTypeOption, index: number) => (
             <StyledTag
               label={option.title}
               {...getTagProps({ index })}
@@ -211,7 +222,7 @@ export default function MultipleInputField() {
       </div>
       {groupedOptions.length > 0 ? (
         <Listbox {...getListboxProps()}>
-          {(groupedOptions as typeof top100Films).map((option, index) => (
+          {(groupedOptions as typeof Tags).map((option, index) => (
             <li {...getOptionProps({ option, index })} key={index}>
               <span>{option.title}</span>
               <CheckIcon fontSize="small" />
@@ -221,9 +232,4 @@ export default function MultipleInputField() {
       ) : null}
     </Root>
   );
-}
-
-interface FilmOptionType {
-  title: string;
-  year: number;
 }

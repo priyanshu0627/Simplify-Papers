@@ -15,6 +15,7 @@ function AskQuestionCard(props: any) {
   const [channelName, setChannelName] = React.useState('');
   const [questionTitle, setQuestionTitle] = React.useState('');
   const [questionComment, setQuestionComment] = React.useState('');
+  const [questionLabels, setQuestionLabels] = React.useState([]);
   const rangeStatus = useAppSelector((state) => state.StatusHighlight);
   const dispatch = useAppDispatch();
 
@@ -43,6 +44,7 @@ function AskQuestionCard(props: any) {
         questionComment,
         channelName,
         rangeStatus,
+        questionLabels,
       };
       dispatch(updateQuestion(formData));
       props.setSidebarSection(props.allQuestionBar);
@@ -102,17 +104,24 @@ function AskQuestionCard(props: any) {
               onChange={handleComment}
               className="mt-4"
             />
-            <MultipleInputField />
+            <MultipleInputField setQuestionLabels={setQuestionLabels} />
             <div className="mt-4 text-sm">
               Use MarkDown to enrich this comment.
             </div>
-            <div className="mt-4 flex flex-row-reverse">
+            <div className="mt-4 flex justify-between">
               <Button
                 variant="contained"
                 className="bg-blue-700"
                 onClick={submitQuestion}
               >
                 ADD QUESTION
+              </Button>
+              <Button
+                variant="contained"
+                className="bg-blue-700"
+                onClick={submitQuestion}
+              >
+                CANCEL
               </Button>
             </div>
           </div>
