@@ -1,10 +1,12 @@
+/* eslint-disable no-alert */
 /* eslint-disable no-console */
 import { Button, OutlinedInput } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 // import { addNewQuestion } from '@/redux/features/questionDataSlice';
-import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+// import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { useAppSelector } from '@/redux/hooks';
 import { reDrawHighlight } from '@/utils/HighlightService';
 
 import type { QuestionsDataType } from '../Types/Types';
@@ -19,7 +21,7 @@ const SidebarSection = {
   seeAnswer: 'seeAnswer',
 };
 
-function PDFSideBar({ onFileChange, pageNumber }: any) {
+function PDFSideBar({ pageNumber }: any) {
   const [sidebarSection, setSidebarSection] = useState(
     SidebarSection.allQuestions
   );

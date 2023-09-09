@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ShareIcon from '@mui/icons-material/Share';

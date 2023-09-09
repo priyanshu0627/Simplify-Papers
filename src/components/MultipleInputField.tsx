@@ -1,3 +1,4 @@
+/* eslint-disable tailwindcss/no-custom-classname */
 import type * as useAutocomplete_1 from '@mui/base/useAutocomplete';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import useAutocomplete from '@mui/base/useAutocomplete';
@@ -176,7 +177,8 @@ const Listbox = styled('ul')(
 `
 );
 
-export default function MultipleInputField({ setQuestionLabels }: any) {
+// export default function MultipleInputField({ setQuestionLabels }: any) {
+export default function MultipleInputField() {
   const {
     getRootProps,
     // getInputLabelProps,
@@ -188,7 +190,7 @@ export default function MultipleInputField({ setQuestionLabels }: any) {
     value,
     focused,
     setAnchorEl,
-    options,
+    // options,
   } = useAutocomplete({
     id: 'customized-hook-demo',
     // defaultValue: [Tags[1]],
@@ -197,9 +199,9 @@ export default function MultipleInputField({ setQuestionLabels }: any) {
     getOptionLabel: (option: { title: any }) => option.title,
   });
 
-  React.useEffect(() => {
-    setQuestionLabels(options);
-  }, [options]);
+  // React.useEffect(() => {
+  //   setQuestionLabels(options);
+  // }, [options]);
 
   return (
     <Root>

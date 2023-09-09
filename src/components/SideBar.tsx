@@ -1,9 +1,10 @@
+/* eslint-disable no-alert */
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
-import ShareIcon from '@mui/icons-material/Share';
+// import ShareIcon from '@mui/icons-material/Share';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
@@ -26,9 +27,9 @@ const SideBar = (props: any) => {
     null
   );
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+  // const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -100,11 +101,11 @@ const SideBar = (props: any) => {
             }}
           >
             Project Name{' '}
-            <ShareIcon
+            {/* <ShareIcon
               aria-describedby={id}
               variant="contained"
               onClick={handleClick}
-            />
+            /> */}
           </MenuItem>
           <SubMenu
             label="Outline"

@@ -4,12 +4,13 @@ import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import * as React from 'react';
 
-type Props = {
-  isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-};
+// type Props = {
+//   isOpen: boolean;
+//   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+// };
 
-function FloatingHighlightMenu({ isOpen, setIsOpen }: Props) {
+// function FloatingHighlightMenu({ isOpen, setIsOpen }: Props) {
+function FloatingHighlightMenu() {
   return (
     <Box sx={{ '& > :not(style)': { m: 1 } }}>
       <Fab color="secondary" aria-label="edit">
