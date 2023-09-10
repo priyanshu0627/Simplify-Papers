@@ -158,7 +158,12 @@ function validateWrongHighlight(range: any) {
   const object = document.getElementsByClassName(
     'react-pdf__Page__textContent textLayer'
   )[0];
-  if (object && object.getElementsByTagName('span')) return 1;
+  if (!object) {
+    return 1;
+  }
+  if (!object.getElementsByTagName('span')) {
+    return 1;
+  }
   return 0;
 }
 
